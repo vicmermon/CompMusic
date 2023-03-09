@@ -135,7 +135,7 @@ tape |>
 For 
 
 
-### Hyperpop is loud and energetic
+### Loud and energetic
 
 ```{r}
 library(tidyverse)
@@ -180,8 +180,29 @@ corpus <-
     ) +
     scale_alpha_continuous(
       guide = "none"
-    )
+    ) +
+    ggtitle("Energy and loudness across songs and playlists")
     
 ggplotly()
 ```
+***
+With this plot I wanted to study the overall loudness and energy across every song in my corpus. I decided to use the geom_point visualization so I could see every song represented with a circle. I also used plotly to identify each song with its name and its respective color associated with each playlist. The tempo of the songs is also associated with its transparency, but it is not the focus study of this plot.
 
+As you can see, the big bulk of songs is concentrated around the -10dB and -4dB range. My interpretation is that this is not a defining characteristic of the "hyperpop sound", because probably most of the songs uploaded to streaming services get mastered around that level. However, it caught my eye how a great handful of songs are *above* 0dB, which made me think that hyperpop can easily reach the clipping territory. I will further study some of these songs to see if I can find any more useful information that stands out about them.
+
+In terms of energy, it seems like the range is extremely bast: It is mainly concentrated above 0.50, but covers almost every value. I argue that this is prooves that hyperpop songs don't need to be very energetic to be part of the playlists, and even relaxing ballads such as Himera's "I Look Up to the Sky & Remember How Much You Mean to Me" can be considered part of the "Sound of hyperpop". However, It seems like once we start exploring the actual hyperpop communities picks (such as sleepy zone and FORM), the song choices deviate more from the bulk of energetic tracks that most editorial playlist recognize as energetic.
+
+### Nightcore and speed
+``` {r}
+ggplot(corpus, aes(x=tempo, fill = as.factor(category))) +
+  geom_density(alpha = 0.5) +
+  ggtitle("BPM distribution across playlists")
+
+```
+
+***
+One of the main attributes of the modern hyperpop sound is its influence from early internet music. In the early days of media sharing platforms such as YouTube, the genre Nightcore was born from uploads of sped up versions of famous pop songs. Hyperpop drinks a lot from this era of the internet, with high pitched vocals, instruments and fast tempos that easily embrace the early days of internet music consumption. 
+
+As this is another key element of the "hyperpop sound", I wanted to see if it coorelates to the data that I could find. In the resulting plot, you can see how there is a noticeable peak around 140-145 bpm where most of the songs reside. There is a secondary area around 80-90 bpm, which at first surprised me because I was not expecting such result across every playlist. After working on these plots for several days, I stumbled upon a track whose tempo value indicated 77bpm, however, this song feels quite faster to me. The song is "Hollywood Baby" by 100 gecs, and after seeing this phenomenon, I came to the conclusion that many of these tracks in the lower tempo range were having its bpm divided by two. The 100 gecs song has a bpm of 154, but the spotify API interprets it as 77, which is in practice the same. 
+
+With this outlier exploration, I argue that the spotify API is not too reliable giving 100% accurate bpm measures, seeing how most of them get halved in the process. I wouldn't say this plot is useful for giving us an insight into the "hyperpop sound". However, as I stated previously, tempo is a very historically important thing to this community, so I tought it could be still worth exploring and keeping this plot in my storyboard.
