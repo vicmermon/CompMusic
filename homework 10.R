@@ -1,6 +1,8 @@
+
 library(tidyverse)
 library(spotifyr)
 library(compmus)
+library(spotifyr)
 
 circshift <- function(v, n) {
   if (n == 0) v else c(tail(v, n), head(v, -n))
@@ -88,10 +90,39 @@ key_templates <-
     "D#:min", circshift(minor_key, 3)
   )
 
-#### KEYGRAMS AND CHORDGRAMS
+### CHORDGRAM OF AN ARCHETYPE: HOMESWITCHER
 
-IDL <-
-  get_tidy_audio_analysis("3hZkcsTidjsz6o69gTCQLY") |>
+home <-
+  get_tidy_audio_analysis("3wGDs4CbpDqpsTYyN5pe8o") |>
+  compmus_align(sections, segments) |>
+  select(sections) |>
+  unnest(sections) |>
+  mutate(
+    pitches =
+      map(segments,
+          compmus_summarise, pitches,
+          method = "mean", norm = "manhattan"
+      )
+  )
+
+home |> 
+  compmus_match_pitch_template(
+    key_templates,         # Change to chord_templates if descired
+    method = "euclidean",  # Try different distance metrics
+    norm = "manhattan"     # Try different norms
+  ) |>
+  ggplot(
+    aes(x = start + duration / 2, width = duration, y = name, fill = d)
+  ) +
+  geom_tile() +
+  scale_fill_viridis_c(guide = "none") +
+  theme_minimal() +
+  labs(x = "Time (s)", y = "") +
+  ggtitle("Keygram of Homeswitcher by Jane Remover")
+
+
+friend <-
+  get_tidy_audio_analysis("5tJAGoIXg3ZKX7W6unLGMv") |>
   compmus_align(bars, segments) |>
   select(bars) |>
   unnest(bars) |>
@@ -103,10 +134,10 @@ IDL <-
       )
   )
 
-IDL |> 
+friend |> 
   compmus_match_pitch_template(
     chord_templates,         # Change to chord_templates if descired
-    method = "manhattan",  # Try different distance metrics
+    method = "cosine",  # Try different distance metrics
     norm = "euclidean"     # Try different norms
   ) |>
   ggplot(
@@ -115,95 +146,5 @@ IDL |>
   geom_tile() +
   scale_fill_viridis_c(guide = "none") +
   theme_minimal() +
-  labs(x = "Time (s)", y = "")
-
-
-#### TRACK LEVEL SUMMARIES
-
-bebop <-
-  get_playlist_audio_features(
-    "thesoundsofspotify",
-    "55s8gstHcaCyfU47mQgLrB"
-  ) |>
-  slice(1:30) |>
-  add_audio_analysis()
-bigband <-
-  get_playlist_audio_features(
-    "thesoundsofspotify",
-    "2cjIvuw4VVOQSeUAZfNiqY"
-  ) |>
-  slice(1:30) |>
-  add_audio_analysis()
-jazz <-
-  bebop |>
-  mutate(genre = "Bebop") |>
-  bind_rows(bigband |> mutate(genre = "Big Band"))
-
-
-
-jazz |>
-  mutate(
-    sections =
-      map(
-        segments,                                    # sections or segments
-        summarise_at,
-        vars(loudness, duration),             # features of interest
-        list(segments_mean = mean, segments_sd = sd)   # aggregation functions
-      )
-  ) |>
-  unnest(sections) |>
-  ggplot(
-    aes(
-      x = tempo,
-      y = tempo_section_sd,
-      colour = genre,
-      alpha = loudness
-    )
-  ) +
-  geom_point(aes(size = duration / 60)) +
-  geom_rug() +
-  theme_minimal() +
-  ylim(0, 5) +
-  labs(
-    x = "Mean Tempo (bpm)",
-    y = "SD Tempo",
-    colour = "Genre",
-    size = "Duration (min)",
-    alpha = "Volume (dBFS)"
-  )
-
-jazz |>
-  mutate(
-    timbre =
-      map(
-        segments,
-        compmus_summarise,
-        timbre,
-        method = "mean"
-      )
-  ) |>
-  select(genre, timbre) |>
-  compmus_gather_timbre() |>
-  ggplot(aes(x = basis, y = value, fill = genre)) +
-  geom_violin() +
-  scale_fill_viridis_d() +
-  labs(x = "Spotify Timbre Coefficients", y = "", fill = "Genre")
-
-
-##### Histogram of keys in the corpus
-library(spotifyr)
-
-hyper <- get_playlist_audio_features("", "4fg8XveWZ4xQatc4mHLsyb")
-classic <- get_playlist_audio_features("", "3WWGBxHe4bAyKFq1DAnszd")
-sleepy <- get_playlist_audio_features("", "1hUOz9Cb5ELjJrLytD0n1b")
-perfect <- get_playlist_audio_features("", "6MXc6iTKELyEL62ahBY2i2")
-music2 <- get_playlist_audio_features("", "1GPov4sutwV2VRK7TB2y22")
-feed <- get_playlist_audio_features("", "7oEgNy93qnlcm361HgrXrN")
-umru <- get_playlist_audio_features("", "1Gh40BPKoYlLfQaGAisWjo")
-sound <-get_playlist_audio_features("", "7DrJ92Lc9UaVB1rKM2UGsg")
-goop <-get_playlist_audio_features("", "2eHpU1UvXMr8vSrb1p0fRz")
-form <-get_playlist_audio_features("", "4w3jVLtbQufq1jCMBzlqOr")
-
-ggplot(sound, aes(x = key)) +
-  geom_histogram(binwidth = 0.5) +
-  scale_x_continuous()
+  labs(x = "Time (s)", y = "") +
+  ggtitle("Chordogram of Broken Friendship Bracelet by Himera")
