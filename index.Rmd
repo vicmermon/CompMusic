@@ -171,7 +171,7 @@ The track is F#min, but its clarity seems to differ depending on the section of 
 
 For the second plot, I analysed the chordogram of Broken Friendship Bracelet by Himera, a track that is mainly composed of a repeating arpeggio that varies and incorporates more elements as the song progresses. Around 50 seconds in, we can see a shift from the first section that lived in the D7~C7 area towards the C#min~F#min area. This shift is very noticeable in the track with a change in sound selection that lead more towards trance music. 
 
-test
+test2
 
 ### Homework week 9
 
