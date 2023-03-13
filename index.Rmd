@@ -169,7 +169,9 @@ For this keygram I decided to analyse "homeswitcher" by Jane Remover, an archety
 
 The track is F#min, but its clarity seems to differ depending on the section of the song. Around 40seconds in, the code seems to have a harder time telling the key, and even C#min seems to be darker for a few seconds. My guess is that the reason why the key becomes less obvious in these sections is because they are the loudest, and coincidentally incorporate a very noisy sub bass into the mix.
 
-For the second plot, I analysed the chordogram of Broken Friendship Bracelet by Himera, a track that is mainly composed of a repeating arpeggio that varies and incorporates more elements as the song progresses. Around 50 seconds in, we can see a shift from the first section that lived in the D7~C7 area towards the C#min~F#min area. This shift is very noticeable in the track with a change in sound selection that lead more towards trance music.
+For the second plot, I analysed the chordogram of Broken Friendship Bracelet by Himera, a track that is mainly composed of a repeating arpeggio that varies and incorporates more elements as the song progresses. Around 50 seconds in, we can see a shift from the first section that lived in the D7~C7 area towards the C#min~F#min area. This shift is very noticeable in the track with a change in sound selection that lead more towards trance music. 
+
+test
 
 ### Homework week 9
 
