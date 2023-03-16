@@ -5,6 +5,7 @@ output:
     orientation: columns
     vertical_layout: fill
     storyboard: true
+
 ---
 
 ```{r setup, include=FALSE}
@@ -14,11 +15,372 @@ library(spotifyr)
 library(compmus)
 library(plotly)
 library(dplyr)
+source("TempogramsClass.R")
 ```
 Latest homework {.storyboard}
 =====================================
 
-### Homework 10 Part 1
+### Homework 11 Part 1
+
+```{r}
+
+
+```
+
+***
+WIP
+
+### Homework 11 Part 2
+
+```{r}
+# circshift <- function(v, n) {
+#   if (n == 0) v else c(tail(v, n), head(v, -n))
+# }
+# 
+# #      C     C#    D     Eb    E     F     F#    G     Ab    A     Bb    B
+# major_chord <-
+#   c(   1,    0,    0,    0,    1,    0,    0,    1,    0,    0,    0,    0)
+# minor_chord <-
+#   c(   1,    0,    0,    1,    0,    0,    0,    1,    0,    0,    0,    0)
+# seventh_chord <-
+#   c(   1,    0,    0,    0,    1,    0,    0,    1,    0,    0,    1,    0)
+# 
+# major_key <-
+#   c(6.35, 2.23, 3.48, 2.33, 4.38, 4.09, 2.52, 5.19, 2.39, 3.66, 2.29, 2.88)
+# minor_key <-
+#   c(6.33, 2.68, 3.52, 5.38, 2.60, 3.53, 2.54, 4.75, 3.98, 2.69, 3.34, 3.17)
+# 
+# chord_templates <-
+#   tribble(
+#     ~name, ~template,
+#     "Gb:7", circshift(seventh_chord, 6),
+#     "Gb:maj", circshift(major_chord, 6),
+#     "Bb:min", circshift(minor_chord, 10),
+#     "Db:maj", circshift(major_chord, 1),
+#     "F:min", circshift(minor_chord, 5),
+#     "Ab:7", circshift(seventh_chord, 8),
+#     "Ab:maj", circshift(major_chord, 8),
+#     "C:min", circshift(minor_chord, 0),
+#     "Eb:7", circshift(seventh_chord, 3),
+#     "Eb:maj", circshift(major_chord, 3),
+#     "G:min", circshift(minor_chord, 7),
+#     "Bb:7", circshift(seventh_chord, 10),
+#     "Bb:maj", circshift(major_chord, 10),
+#     "D:min", circshift(minor_chord, 2),
+#     "F:7", circshift(seventh_chord, 5),
+#     "F:maj", circshift(major_chord, 5),
+#     "A:min", circshift(minor_chord, 9),
+#     "C:7", circshift(seventh_chord, 0),
+#     "C:maj", circshift(major_chord, 0),
+#     "E:min", circshift(minor_chord, 4),
+#     "G:7", circshift(seventh_chord, 7),
+#     "G:maj", circshift(major_chord, 7),
+#     "B:min", circshift(minor_chord, 11),
+#     "D:7", circshift(seventh_chord, 2),
+#     "D:maj", circshift(major_chord, 2),
+#     "F#:min", circshift(minor_chord, 6),
+#     "A:7", circshift(seventh_chord, 9),
+#     "A:maj", circshift(major_chord, 9),
+#     "C#:min", circshift(minor_chord, 1),
+#     "E:7", circshift(seventh_chord, 4),
+#     "E:maj", circshift(major_chord, 4),
+#     "G#:min", circshift(minor_chord, 8),
+#     "B:7", circshift(seventh_chord, 11),
+#     "B:maj", circshift(major_chord, 11),
+#     "D#:min", circshift(minor_chord, 3)
+#   )
+# 
+# key_templates <-
+#   tribble(
+#     ~name, ~template,
+#     "Gb:maj", circshift(major_key, 6),
+#     "Bb:min", circshift(minor_key, 10),
+#     "Db:maj", circshift(major_key, 1),
+#     "F:min", circshift(minor_key, 5),
+#     "Ab:maj", circshift(major_key, 8),
+#     "C:min", circshift(minor_key, 0),
+#     "Eb:maj", circshift(major_key, 3),
+#     "G:min", circshift(minor_key, 7),
+#     "Bb:maj", circshift(major_key, 10),
+#     "D:min", circshift(minor_key, 2),
+#     "F:maj", circshift(major_key, 5),
+#     "A:min", circshift(minor_key, 9),
+#     "C:maj", circshift(major_key, 0),
+#     "E:min", circshift(minor_key, 4),
+#     "G:maj", circshift(major_key, 7),
+#     "B:min", circshift(minor_key, 11),
+#     "D:maj", circshift(major_key, 2),
+#     "F#:min", circshift(minor_key, 6),
+#     "A:maj", circshift(major_key, 9),
+#     "C#:min", circshift(minor_key, 1),
+#     "E:maj", circshift(major_key, 4),
+#     "G#:min", circshift(minor_key, 8),
+#     "B:maj", circshift(major_key, 11),
+#     "D#:min", circshift(minor_key, 3)
+#   )
+# 
+# 
+
+```
+
+***
+WIP
+
+Past, Present and Future of hyperpop {.storyboard}
+=====================================
+
+### It's all about being loud and energetic
+
+```{r}
+hyper <- get_playlist_audio_features("", "4fg8XveWZ4xQatc4mHLsyb")
+classic <- get_playlist_audio_features("", "3WWGBxHe4bAyKFq1DAnszd")
+feed <- get_playlist_audio_features("", "7oEgNy93qnlcm361HgrXrN")
+sound <-get_playlist_audio_features("", "7DrJ92Lc9UaVB1rKM2UGsg")
+
+
+loud <-
+  bind_rows(
+    hyper |> mutate(category = "Hyperpop (Spotify editorial)"),
+    classic |> mutate(category = "Hyperpop Classics (Spotify editorial)"),
+    feed |> mutate(category = "feedBack (Spotify editorial)"),
+    sound |> mutate(category = "The Sound of Hyperpop"),
+  )
+
+
+  ggplot(loud, aes(x = energy, y = loudness, alpha = tempo, color = category, text = track.name)) +
+  geom_point(size = 2, fill = "black") +
+
+  scale_color_brewer(
+    type = "qual",
+    palette = "Spectral",
+    name = "Playlist"
+    ) +
+    scale_alpha_continuous(
+      guide = "none"
+    ) 
+  
+    
+ggplotly()
+```
+***
+With this plot I wanted to study the overall loudness and energy across every song in my corpus. I decided to use the geom_point visualization so I could see every song represented with a circle. I also used plotly to identify each song with its name and its respective color associated with each playlist. The tempo of the songs is also associated with its transparency, but it is not the focus study of this plot.
+
+As you can see, the big bulk of songs is concentrated around the -10dB and -4dB range. My interpretation is that this is not a defining characteristic of the “hyperpop sound”, because probably most of the songs uploaded to streaming services get mastered around that level. However, it caught my eye how a great handful of songs are above 0dB, which made me think that hyperpop can easily reach the clipping territory. I will further study some of these songs to see if I can find any more useful information that stands out about them.
+
+In terms of energy, it seems like the range is extremely bast: It is mainly concentrated above 0.50, but covers almost every value. I argue that this is prooves that hyperpop songs don’t need to be very energetic to be part of the playlists, and even relaxing ballads such as Himera’s “I Look Up to the Sky & Remember How Much You Mean to Me” can be considered part of the “Sound of hyperpop”. However, It seems like once we start exploring the actual hyperpop communities picks (such as sleepy zone and FORM), the song choices deviate more from the bulk of energetic tracks that most editorial playlist recognize as energetic.
+
+### Nightcore influence, high bpm
+
+```{r}
+ggplot(loud, aes(x=tempo, fill = as.factor(category))) +
+  geom_density(alpha = 0.5) +
+  ggtitle("BPM distribution across playlists")
+
+ggplotly()
+```
+***
+One of the main attributes of the modern hyperpop sound is its influence from early internet music. In the early days of media sharing platforms such as YouTube, the genre Nightcore was born from uploads of sped up versions of famous pop songs. Hyperpop drinks a lot from this era of the internet, with high pitched vocals, instruments and fast tempos that easily embrace the early days of internet music consumption.
+
+As this is another key element of the “hyperpop sound”, I wanted to see if it coorelates to the data that I could find. In the resulting plot, you can see how there is a noticeable peak around 140-145 bpm where most of the songs reside. There is a secondary area around 80-90 bpm, which at first surprised me because I was not expecting such result across every playlist. After working on these plots for several days, I stumbled upon a track whose tempo value indicated 77bpm, however, this song feels quite faster to me. The song is “Hollywood Baby” by 100 gecs, and after seeing this phenomenon, I came to the conclusion that many of these tracks in the lower tempo range were having its bpm divided by two. The 100 gecs song has a bpm of 154, but the spotify API interprets it as 77, which is in practice the same.
+
+With this outlier exploration, I argue that the spotify API is not too reliable giving 100% accurate bpm measures, seeing how most of them get halved in the process. I wouldn’t say this plot is useful for giving us an insight into the “hyperpop sound”. However, as I stated previously, tempo is a very historically important thing to this community, so I tought it could be still worth exploring and keeping this plot in my storyboard.
+
+### Key usage across time
+
+```{r}
+
+```
+
+Chromograms {data-navmenu="The hyperpop sound"}
+=====================================
+
+### Chart AA
+
+```{r}
+####### HOLLYWOOD BABY
+baby <-
+  get_tidy_audio_analysis("48ElaQLYuOaybqagIlPxpU") |> # Hollywood Baby
+  compmus_align(bars, segments) |>                     # Change `bars`
+  select(bars) |>                                      #   in all three
+  unnest(bars) |>                                      #   of these lines.
+  mutate(
+    pitches =
+      map(segments,
+          compmus_summarise, pitches,
+          method = "rms", norm = "euclidean"              # Change summary & norm.
+      )
+  ) |>
+  mutate(
+    timbre =
+      map(segments,
+          compmus_summarise, timbre,
+          method = "rms", norm = "euclidean"              # Change summary & norm.
+      )
+  )
+baby |>
+  compmus_gather_timbre() |>
+  ggplot(
+    aes(
+      x = start + duration / 2,
+      width = duration,
+      y = basis,
+      fill = value
+    )
+  ) +
+  geom_tile() +
+  labs(x = "Time (s)", y = NULL, fill = "Magnitude") +
+  scale_fill_viridis_c() +                              
+  theme_classic()
+
+####### SPOILED LITTLE BRAT
+brat <-
+  get_tidy_audio_analysis("724utiMbqUfT1g3tqbfQYu") |> # 
+  compmus_align(bars, segments) |>                     # Change `bars`
+  select(bars) |>                                      #   in all three
+  unnest(bars) |>                                      #   of these lines.
+  mutate(
+    pitches =
+      map(segments,
+          compmus_summarise, pitches,
+          method = "rms", norm = "euclidean"              # Change summary & norm.
+      )
+  ) |>
+  mutate(
+    timbre =
+      map(segments,
+          compmus_summarise, timbre,
+          method = "rms", norm = "euclidean"              # Change summary & norm.
+      )
+  )
+brat |>
+  compmus_gather_timbre() |>
+  ggplot(
+    aes(
+      x = start + duration / 2,
+      width = duration,
+      y = basis,
+      fill = value
+    )
+  ) +
+  geom_tile() +
+  labs(x = "Time (s)", y = NULL, fill = "Magnitude") +
+  scale_fill_viridis_c() +                              
+  theme_classic()
+
+
+```
+
+***
+Commentary WIP
+
+Structure analysis {data-navmenu="The hyperpop sound" .storyboard}
+=====================================
+
+### The clear pop stucture
+```{r}
+# SELF SIMILARITY SELFDESTRUCT TORR
+
+torr <-
+  get_tidy_audio_analysis("0JEViMA9EhoTE501kxvJMU") |> # 
+  compmus_align(bars, segments) |>                     # Change `bars`
+  select(bars) |>                                      #   in all three
+  unnest(bars) |>                                      #   of these lines.
+  mutate(
+    pitches =
+      map(segments,
+          compmus_summarise, pitches,
+          method = "rms", norm = "euclidean"              # Change summary & norm.
+      )
+  ) |>
+  mutate(
+    timbre =
+      map(segments,
+          compmus_summarise, timbre,
+          method = "rms", norm = "euclidean"              # Change summary & norm.
+      )
+  )
+
+torr |>
+  compmus_self_similarity(timbre, "cosine") |> 
+  ggplot(
+    aes(
+      x = xstart + xduration / 2,
+      width = xduration,
+      y = ystart + yduration / 2,
+      height = yduration,
+      fill = d
+    )
+  ) +
+  geom_tile() +
+  coord_fixed() +
+  scale_fill_viridis_c(guide = "none") +
+  theme_classic() +
+  labs(x = "", y = "")
+```
+
+***
+The prefix "Hyper" slapped into the "pop" umbrella genre implies a clear pop influence into this type the hyerpop genre. One of the attributes that make pop music, popular, its the structure of the song. That's why, for this self-similarity plot I decided to see if a typical hyperpop song follows the classic pops structure of Verse-chorus-verse-chorus-bridge-chorus.
+
+This is selfdestruct by torr. When I first created this plot, the pop stucture was clear at to me first sight. There's a relatively easy to discern structure (a diagonal line) that repeats three time across the song. While listening to the track I realized that this is the chorus, and the sections inbetween are verses. Right before the 100 seconds mark we can see a greener section that underlies the bridge, a section of pop songs characterized by changes in chord progression, lyrics and in timbre. After this, the chorus comes back one last time, incorporating new elements that weren't there in its previous itterations.
+
+Overall, this plot helped me understand what Spotify means by "Hyperpop": If we strip down other elements such as sound design, we are left what essentialy is a pop song. 
+
+
+### What about an ambient section?
+
+```{r}
+###### SELF SIMILARITY DRY LAND
+
+dry <-
+  get_tidy_audio_analysis("7j7nOY7xZ7fpSVAKT4qz4b") |> # 
+  compmus_align(bars, segments) |>                     # Change `bars`
+  select(bars) |>                                      #   in all three
+  unnest(bars) |>                                      #   of these lines.
+  mutate(
+    pitches =
+      map(segments,
+          compmus_summarise, pitches,
+          method = "rms", norm = "euclidean"              # Change summary & norm.
+      )
+  ) |>
+  mutate(
+    timbre =
+      map(segments,
+          compmus_summarise, timbre,
+          method = "rms", norm = "euclidean"              # Change summary & norm.
+      )
+  )
+
+dry |>
+  compmus_self_similarity(timbre, "cosine") |> 
+  ggplot(
+    aes(
+      x = xstart + xduration / 2,
+      width = xduration,
+      y = ystart + yduration / 2,
+      height = yduration,
+      fill = d
+    )
+  ) +
+  geom_tile() +
+  coord_fixed() +
+  scale_fill_viridis_c(guide = "none") +
+  theme_classic() +
+  labs(x = "", y = "")
+```
+
+***
+
+Dry land 2001 by underscores is an example of a hyperpop song with an unusual structure, the song starts as a bass centered pop songs about tornados, and seemengly transitions into a 7 minute long ambient piece. With this self-similarity plot I wanted to see this ambient section appears in the plot. We can distinguish two clear sections: Before and after 150 seconds.
+
+Before this timestamp, the song retains its pop structure, and we can see some patterns that repeat during this time and delineate this type of songwriting characterized by verses and choruses.From 150secs on, we can see the appearance of a new pattern: Several parallel lines emerge and sustain through time. This is clearly the start of the ambient section, with looping guitar patterns that repeat until the 7 minute mark. It is interesting to see how a song with such an unconventional stucture can be bundled up in a collection of pop songs characterized with short song durations and more overall pop influenced sturctures thought the whole track. 
+
+This ambient section is an example of how the "hyperpop" sound goes beyond pop: These artists are not afraid to experiment and include an ambient section into their silly pop song, which clearly caught the eyes of the music industry and spotify's genre-creating playlist.
+
+Keygrams and chordograms {data-navmenu="The hyperpop sound" .storyboard}
+=====================================
+
+### Homeswitcher keygram
 
 ```{r}
 circshift <- function(v, n) {
@@ -122,7 +484,7 @@ home <-
       )
   )
 
-home |> 
+home |>
   compmus_match_pitch_template(
     key_templates,         # Change to chord_templates if descired
     method = "euclidean",  # Try different distance metrics
@@ -136,7 +498,6 @@ home |>
   theme_minimal() +
   labs(x = "Time (s)", y = "") +
   ggtitle("Keygram of Homeswitcher by Jane Remover")
-
 ```
 
 ***
@@ -144,95 +505,8 @@ For this keygram I decided to analyse “homeswitcher” by Jane Remover, an arc
 
 The track is F#min, but its clarity seems to differ depending on the section of the song. Around 40seconds in, the code seems to have a harder time telling the key, and even C#min seems to be darker for a few seconds. My guess is that the reason why the key becomes less obvious in these sections is because they are the loudest, and coincidentally incorporate a very noisy sub bass into the mix.
 
-### Homework 10 Part 2
-
+### Broken Friendship Bracelet chordogram
 ```{r}
-circshift <- function(v, n) {
-  if (n == 0) v else c(tail(v, n), head(v, -n))
-}
-
-#      C     C#    D     Eb    E     F     F#    G     Ab    A     Bb    B
-major_chord <-
-  c(   1,    0,    0,    0,    1,    0,    0,    1,    0,    0,    0,    0)
-minor_chord <-
-  c(   1,    0,    0,    1,    0,    0,    0,    1,    0,    0,    0,    0)
-seventh_chord <-
-  c(   1,    0,    0,    0,    1,    0,    0,    1,    0,    0,    1,    0)
-
-major_key <-
-  c(6.35, 2.23, 3.48, 2.33, 4.38, 4.09, 2.52, 5.19, 2.39, 3.66, 2.29, 2.88)
-minor_key <-
-  c(6.33, 2.68, 3.52, 5.38, 2.60, 3.53, 2.54, 4.75, 3.98, 2.69, 3.34, 3.17)
-
-chord_templates <-
-  tribble(
-    ~name, ~template,
-    "Gb:7", circshift(seventh_chord, 6),
-    "Gb:maj", circshift(major_chord, 6),
-    "Bb:min", circshift(minor_chord, 10),
-    "Db:maj", circshift(major_chord, 1),
-    "F:min", circshift(minor_chord, 5),
-    "Ab:7", circshift(seventh_chord, 8),
-    "Ab:maj", circshift(major_chord, 8),
-    "C:min", circshift(minor_chord, 0),
-    "Eb:7", circshift(seventh_chord, 3),
-    "Eb:maj", circshift(major_chord, 3),
-    "G:min", circshift(minor_chord, 7),
-    "Bb:7", circshift(seventh_chord, 10),
-    "Bb:maj", circshift(major_chord, 10),
-    "D:min", circshift(minor_chord, 2),
-    "F:7", circshift(seventh_chord, 5),
-    "F:maj", circshift(major_chord, 5),
-    "A:min", circshift(minor_chord, 9),
-    "C:7", circshift(seventh_chord, 0),
-    "C:maj", circshift(major_chord, 0),
-    "E:min", circshift(minor_chord, 4),
-    "G:7", circshift(seventh_chord, 7),
-    "G:maj", circshift(major_chord, 7),
-    "B:min", circshift(minor_chord, 11),
-    "D:7", circshift(seventh_chord, 2),
-    "D:maj", circshift(major_chord, 2),
-    "F#:min", circshift(minor_chord, 6),
-    "A:7", circshift(seventh_chord, 9),
-    "A:maj", circshift(major_chord, 9),
-    "C#:min", circshift(minor_chord, 1),
-    "E:7", circshift(seventh_chord, 4),
-    "E:maj", circshift(major_chord, 4),
-    "G#:min", circshift(minor_chord, 8),
-    "B:7", circshift(seventh_chord, 11),
-    "B:maj", circshift(major_chord, 11),
-    "D#:min", circshift(minor_chord, 3)
-  )
-
-key_templates <-
-  tribble(
-    ~name, ~template,
-    "Gb:maj", circshift(major_key, 6),
-    "Bb:min", circshift(minor_key, 10),
-    "Db:maj", circshift(major_key, 1),
-    "F:min", circshift(minor_key, 5),
-    "Ab:maj", circshift(major_key, 8),
-    "C:min", circshift(minor_key, 0),
-    "Eb:maj", circshift(major_key, 3),
-    "G:min", circshift(minor_key, 7),
-    "Bb:maj", circshift(major_key, 10),
-    "D:min", circshift(minor_key, 2),
-    "F:maj", circshift(major_key, 5),
-    "A:min", circshift(minor_key, 9),
-    "C:maj", circshift(major_key, 0),
-    "E:min", circshift(minor_key, 4),
-    "G:maj", circshift(major_key, 7),
-    "B:min", circshift(minor_key, 11),
-    "D:maj", circshift(major_key, 2),
-    "F#:min", circshift(minor_key, 6),
-    "A:maj", circshift(major_key, 9),
-    "C#:min", circshift(minor_key, 1),
-    "E:maj", circshift(major_key, 4),
-    "G#:min", circshift(minor_key, 8),
-    "B:maj", circshift(major_key, 11),
-    "D#:min", circshift(minor_key, 3)
-  )
-
 friend <-
   get_tidy_audio_analysis("5tJAGoIXg3ZKX7W6unLGMv") |>
   compmus_align(bars, segments) |>
@@ -246,7 +520,7 @@ friend <-
       )
   )
 
-friend |> 
+friend |>
   compmus_match_pitch_template(
     chord_templates,         # Change to chord_templates if descired
     method = "cosine",  # Try different distance metrics
@@ -260,226 +534,10 @@ friend |>
   theme_minimal() +
   labs(x = "Time (s)", y = "") +
   ggtitle("Chordogram of Broken Friendship Bracelet by Himera")
-
 ```
 
 ***
 For this second plot, I analysed the chordogram of Broken Friendship Bracelet by Himera, a track that is mainly composed of a repeating arpeggio that varies and incorporates more elements as the song progresses. Around 50 seconds in, we can see a shift from the first section that lived in the D7~C7 area towards the C#min~F#min area. This shift is very noticeable in the track with a change in sound selection that lead more towards trance music.
-
-Past, Present and Future of hyperpop {.storyboard}
-=====================================
-
-### It's all about being loud and energetic
-
-```{r}
-hyper <- get_playlist_audio_features("", "4fg8XveWZ4xQatc4mHLsyb")
-classic <- get_playlist_audio_features("", "3WWGBxHe4bAyKFq1DAnszd")
-sleepy <- get_playlist_audio_features("", "1hUOz9Cb5ELjJrLytD0n1b")
-perfect <- get_playlist_audio_features("", "6MXc6iTKELyEL62ahBY2i2")
-music2 <- get_playlist_audio_features("", "1GPov4sutwV2VRK7TB2y22")
-feed <- get_playlist_audio_features("", "7oEgNy93qnlcm361HgrXrN")
-umru <- get_playlist_audio_features("", "1Gh40BPKoYlLfQaGAisWjo")
-sound <-get_playlist_audio_features("", "7DrJ92Lc9UaVB1rKM2UGsg")
-goop <-get_playlist_audio_features("", "2eHpU1UvXMr8vSrb1p0fRz")
-form <-get_playlist_audio_features("", "4w3jVLtbQufq1jCMBzlqOr")
-
-
-corpus <-
-  bind_rows(
-    hyper |> mutate(category = "Hyperpop (Spotify editorial)"),
-    classic |> mutate(category = "Hyperpop Classics (Spotify editorial)"),
-    sleepy |> mutate(category = "Sleepy Zone (Community selection)"),
-    perfect |> mutate(category = "Perfect Music Friday (Label picks)"),
-    music2 |> mutate(category = "Music2 (Personal picks)"),
-    feed |> mutate(category = "feedBack (Spotify editorial)"),
-    umru |> mutate(category = "umru's Hard Listening (Artist picks)"),
-    sound |> mutate(category = "The Sound of Hyperpop"),
-    goop |> mutate(category = "Goop House Artists (Community selection)"),
-    form |> mutate(category = "Every FORM All Nighter song")
-  )
-
-
-  ggplot(corpus, aes(x = energy, y = loudness, alpha = tempo, color = category, text = track.name)) +
-  geom_point(size = 2, fill = "black") +
-
-  scale_color_brewer(
-    type = "qual",
-    palette = "Spectral",
-    name = "Playlist"
-    ) +
-    scale_alpha_continuous(
-      guide = "none"
-    )
-    
-ggplotly()
-```
-***
-With this plot I wanted to study the overall loudness and energy across every song in my corpus. I decided to use the geom_point visualization so I could see every song represented with a circle. I also used plotly to identify each song with its name and its respective color associated with each playlist. The tempo of the songs is also associated with its transparency, but it is not the focus study of this plot.
-
-As you can see, the big bulk of songs is concentrated around the -10dB and -4dB range. My interpretation is that this is not a defining characteristic of the “hyperpop sound”, because probably most of the songs uploaded to streaming services get mastered around that level. However, it caught my eye how a great handful of songs are above 0dB, which made me think that hyperpop can easily reach the clipping territory. I will further study some of these songs to see if I can find any more useful information that stands out about them.
-
-In terms of energy, it seems like the range is extremely bast: It is mainly concentrated above 0.50, but covers almost every value. I argue that this is prooves that hyperpop songs don’t need to be very energetic to be part of the playlists, and even relaxing ballads such as Himera’s “I Look Up to the Sky & Remember How Much You Mean to Me” can be considered part of the “Sound of hyperpop”. However, It seems like once we start exploring the actual hyperpop communities picks (such as sleepy zone and FORM), the song choices deviate more from the bulk of energetic tracks that most editorial playlist recognize as energetic.
-
-### Nightcore influence, high bpm
-
-```{r}
-ggplot(corpus, aes(x=tempo, fill = as.factor(category))) +
-  geom_density(alpha = 0.5) +
-  ggtitle("BPM distribution across playlists")
-
-ggplotly()
-```
-***
-One of the main attributes of the modern hyperpop sound is its influence from early internet music. In the early days of media sharing platforms such as YouTube, the genre Nightcore was born from uploads of sped up versions of famous pop songs. Hyperpop drinks a lot from this era of the internet, with high pitched vocals, instruments and fast tempos that easily embrace the early days of internet music consumption.
-
-As this is another key element of the “hyperpop sound”, I wanted to see if it coorelates to the data that I could find. In the resulting plot, you can see how there is a noticeable peak around 140-145 bpm where most of the songs reside. There is a secondary area around 80-90 bpm, which at first surprised me because I was not expecting such result across every playlist. After working on these plots for several days, I stumbled upon a track whose tempo value indicated 77bpm, however, this song feels quite faster to me. The song is “Hollywood Baby” by 100 gecs, and after seeing this phenomenon, I came to the conclusion that many of these tracks in the lower tempo range were having its bpm divided by two. The 100 gecs song has a bpm of 154, but the spotify API interprets it as 77, which is in practice the same.
-
-With this outlier exploration, I argue that the spotify API is not too reliable giving 100% accurate bpm measures, seeing how most of them get halved in the process. I wouldn’t say this plot is useful for giving us an insight into the “hyperpop sound”. However, as I stated previously, tempo is a very historically important thing to this community, so I tought it could be still worth exploring and keeping this plot in my storyboard.
-
-### Key usage across time
-
-```{r}
-
-```
-
-Chromograms {data-navmenu="The hyperpop sound"}
-=====================================
-
-### Chart AA
-
-```{r}
-####### HOLLYWOOD BABY
-baby <-
-  get_tidy_audio_analysis("48ElaQLYuOaybqagIlPxpU") |> # Hollywood Baby
-  compmus_align(bars, segments) |>                     # Change `bars`
-  select(bars) |>                                      #   in all three
-  unnest(bars) |>                                      #   of these lines.
-  mutate(
-    pitches =
-      map(segments,
-          compmus_summarise, pitches,
-          method = "rms", norm = "euclidean"              # Change summary & norm.
-      )
-  ) |>
-  mutate(
-    timbre =
-      map(segments,
-          compmus_summarise, timbre,
-          method = "rms", norm = "euclidean"              # Change summary & norm.
-      )
-  )
-baby |>
-  compmus_gather_timbre() |>
-  ggplot(
-    aes(
-      x = start + duration / 2,
-      width = duration,
-      y = basis,
-      fill = value
-    )
-  ) +
-  geom_tile() +
-  labs(x = "Time (s)", y = NULL, fill = "Magnitude") +
-  scale_fill_viridis_c() +                              
-  theme_classic()
-
-####### SPOILED LITTLE BRAT
-brat <-
-  get_tidy_audio_analysis("724utiMbqUfT1g3tqbfQYu") |> # 
-  compmus_align(bars, segments) |>                     # Change `bars`
-  select(bars) |>                                      #   in all three
-  unnest(bars) |>                                      #   of these lines.
-  mutate(
-    pitches =
-      map(segments,
-          compmus_summarise, pitches,
-          method = "rms", norm = "euclidean"              # Change summary & norm.
-      )
-  ) |>
-  mutate(
-    timbre =
-      map(segments,
-          compmus_summarise, timbre,
-          method = "rms", norm = "euclidean"              # Change summary & norm.
-      )
-  )
-brat |>
-  compmus_gather_timbre() |>
-  ggplot(
-    aes(
-      x = start + duration / 2,
-      width = duration,
-      y = basis,
-      fill = value
-    )
-  ) +
-  geom_tile() +
-  labs(x = "Time (s)", y = NULL, fill = "Magnitude") +
-  scale_fill_viridis_c() +                              
-  theme_classic()
-
-
-```
-
-***
-Commentary WIP
-
-Structure analysis {data-navmenu="The hyperpop sound"}
-=====================================
-
-### Chart BB
-
-```{r}
-###### SELF SIMILARITY 
-
-tape <-
-  get_tidy_audio_analysis("4zOfSQJhPaHVdNIPrOJJVl") |> # 
-  compmus_align(bars, segments) |>                     # Change `bars`
-  select(bars) |>                                      #   in all three
-  unnest(bars) |>                                      #   of these lines.
-  mutate(
-    pitches =
-      map(segments,
-          compmus_summarise, pitches,
-          method = "rms", norm = "euclidean"              # Change summary & norm.
-      )
-  ) |>
-  mutate(
-    timbre =
-      map(segments,
-          compmus_summarise, timbre,
-          method = "rms", norm = "euclidean"              # Change summary & norm.
-      )
-  )
-
-tape |>
-  compmus_self_similarity(timbre, "cosine") |> 
-  ggplot(
-    aes(
-      x = xstart + xduration / 2,
-      width = xduration,
-      y = ystart + yduration / 2,
-      height = yduration,
-      fill = d
-    )
-  ) +
-  geom_tile() +
-  coord_fixed() +
-  scale_fill_viridis_c(guide = "none") +
-  theme_classic() +
-  labs(x = "", y = "")
-```
-
-***
-Commentary WIP
-
-Chordograms / keygrams {data-navmenu="The hyperpop sound"}
-=====================================
-
-### Chart CC
-
-```{r}
-```
 
 Tempogram? {data-navmenu="The hyperpop sound"}
 =====================================
@@ -487,6 +545,8 @@ Tempogram? {data-navmenu="The hyperpop sound"}
 ### Chart DD
 
 ```{r}
+p_plot <- readRDS(file = "data/prep_week_11.RDS")
 
+p_plot
 ```
 
