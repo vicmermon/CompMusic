@@ -20,111 +20,67 @@ source("TempogramsClass.R")
 Latest homework {.storyboard}
 =====================================
 
-### Homework 11 Part 1
+### Homework 11 Part 1 [DANCE MUSIC BACKGROUND]
 
 ```{r}
+cook <- get_tidy_audio_analysis("0YAywhODGdHhWxuvFFhjE3")
 
+cook |>
+  tempogram(window_size = 8, hop_size = 1, cyclic = TRUE) |>
+  ggplot(aes(x = time, y = bpm, fill = power)) +
+  geom_raster() +
+  scale_fill_viridis_c(guide = "none") +
+  labs(x = "Time (s)", y = "Tempo (BPM)") +
+  theme_classic() +
+  ggtitle("Tempogram of Beautiful by A. G. Cook")
 
 ```
 
 ***
-WIP
+<h2>A Proto-Hyperpop classic</h2>
+Dance music is no stranger to the precursors of the hyperpop "genre". A steady beat pattern that is easy to dance to paired with cute vocal chops was one of the classic formulas to make a hyperpop banger in 2015, or how it was called around then: "bubblegum bass". The genre was inspired by Pop and Dance songs, and artists in the realm started making music around the idea of experimenting with the boundaries of these genres.
 
-### Homework 11 Part 2
+A. G. Cook, creator of the label PC Music has been claimed to be one of the most important figures of the early days of the scene alongside peers like SOPHIE, EASYFUN, Danny L. Harle, umru, etc. For this reason, I thought it would be a great idea to look at the spectrogram of Cook's single "Beautiful", a dance-pop track that was bundled with many other proto-hyperpop bangers in the <a href="https://open.spotify.com/album/1nJD8cgitrI7sWC4i3Ox32?si=3401937641da4591">"PC Music, Vol. 1"</a> compilation.
+
+The tempogram shows a steady beat of 140 bpm. Around 1min and 15 seconds in we can see a fluctuation that might be caused by the removal of the main vocal and the incorporation risers and sound effects. I could imagine the code having some trouble with this section due to the lack of regular musical onsets that could help establish a steady beat. After this part however, the line comes back to a steady 140bpm. The reason why I chose this song for a tempogram is because I knew that the kick drum pattern didn't start until this part of the song (1min 30 secs), and I wanted to see if the code would have major problems beforehand. As we can see, aside from that brief section and the outro (which removes the drums), the tempogram implies the clear influence that Dance music had in the genre. For the next tempograms, we will see if the influence is still clear in newer hyperpop songs.
+
+### Homework 11 Part 2 [Dance influence prevails]
 
 ```{r}
-# circshift <- function(v, n) {
-#   if (n == 0) v else c(tail(v, n), head(v, -n))
-# }
-# 
-# #      C     C#    D     Eb    E     F     F#    G     Ab    A     Bb    B
-# major_chord <-
-#   c(   1,    0,    0,    0,    1,    0,    0,    1,    0,    0,    0,    0)
-# minor_chord <-
-#   c(   1,    0,    0,    1,    0,    0,    0,    1,    0,    0,    0,    0)
-# seventh_chord <-
-#   c(   1,    0,    0,    0,    1,    0,    0,    1,    0,    0,    1,    0)
-# 
-# major_key <-
-#   c(6.35, 2.23, 3.48, 2.33, 4.38, 4.09, 2.52, 5.19, 2.39, 3.66, 2.29, 2.88)
-# minor_key <-
-#   c(6.33, 2.68, 3.52, 5.38, 2.60, 3.53, 2.54, 4.75, 3.98, 2.69, 3.34, 3.17)
-# 
-# chord_templates <-
-#   tribble(
-#     ~name, ~template,
-#     "Gb:7", circshift(seventh_chord, 6),
-#     "Gb:maj", circshift(major_chord, 6),
-#     "Bb:min", circshift(minor_chord, 10),
-#     "Db:maj", circshift(major_chord, 1),
-#     "F:min", circshift(minor_chord, 5),
-#     "Ab:7", circshift(seventh_chord, 8),
-#     "Ab:maj", circshift(major_chord, 8),
-#     "C:min", circshift(minor_chord, 0),
-#     "Eb:7", circshift(seventh_chord, 3),
-#     "Eb:maj", circshift(major_chord, 3),
-#     "G:min", circshift(minor_chord, 7),
-#     "Bb:7", circshift(seventh_chord, 10),
-#     "Bb:maj", circshift(major_chord, 10),
-#     "D:min", circshift(minor_chord, 2),
-#     "F:7", circshift(seventh_chord, 5),
-#     "F:maj", circshift(major_chord, 5),
-#     "A:min", circshift(minor_chord, 9),
-#     "C:7", circshift(seventh_chord, 0),
-#     "C:maj", circshift(major_chord, 0),
-#     "E:min", circshift(minor_chord, 4),
-#     "G:7", circshift(seventh_chord, 7),
-#     "G:maj", circshift(major_chord, 7),
-#     "B:min", circshift(minor_chord, 11),
-#     "D:7", circshift(seventh_chord, 2),
-#     "D:maj", circshift(major_chord, 2),
-#     "F#:min", circshift(minor_chord, 6),
-#     "A:7", circshift(seventh_chord, 9),
-#     "A:maj", circshift(major_chord, 9),
-#     "C#:min", circshift(minor_chord, 1),
-#     "E:7", circshift(seventh_chord, 4),
-#     "E:maj", circshift(major_chord, 4),
-#     "G#:min", circshift(minor_chord, 8),
-#     "B:7", circshift(seventh_chord, 11),
-#     "B:maj", circshift(major_chord, 11),
-#     "D#:min", circshift(minor_chord, 3)
-#   )
-# 
-# key_templates <-
-#   tribble(
-#     ~name, ~template,
-#     "Gb:maj", circshift(major_key, 6),
-#     "Bb:min", circshift(minor_key, 10),
-#     "Db:maj", circshift(major_key, 1),
-#     "F:min", circshift(minor_key, 5),
-#     "Ab:maj", circshift(major_key, 8),
-#     "C:min", circshift(minor_key, 0),
-#     "Eb:maj", circshift(major_key, 3),
-#     "G:min", circshift(minor_key, 7),
-#     "Bb:maj", circshift(major_key, 10),
-#     "D:min", circshift(minor_key, 2),
-#     "F:maj", circshift(major_key, 5),
-#     "A:min", circshift(minor_key, 9),
-#     "C:maj", circshift(major_key, 0),
-#     "E:min", circshift(minor_key, 4),
-#     "G:maj", circshift(major_key, 7),
-#     "B:min", circshift(minor_key, 11),
-#     "D:maj", circshift(major_key, 2),
-#     "F#:min", circshift(minor_key, 6),
-#     "A:maj", circshift(major_key, 9),
-#     "C#:min", circshift(minor_key, 1),
-#     "E:maj", circshift(major_key, 4),
-#     "G#:min", circshift(minor_key, 8),
-#     "B:maj", circshift(major_key, 11),
-#     "D#:min", circshift(minor_key, 3)
-#   )
-# 
-# 
+dream <- get_tidy_audio_analysis("68MQeN7xm2ooBG1o3BIS39")
+
+dream |>
+  tempogram(window_size = 8, hop_size = 1, cyclic = TRUE) |>
+  ggplot(aes(x = time, y = bpm, fill = power)) +
+  geom_raster() +
+  scale_fill_viridis_c(guide = "none") +
+  labs(x = "Time (s)", y = "Tempo (BPM)") +
+  theme_classic() +
+  ggtitle("Tempogram of Dream Analysis by patchymate")
 
 ```
 
 ***
-WIP
+To see how the influence of dance music has prevailed across the years in the genre, I wanted to study a song that came out in 2023. This song was part of the feedBack playlist, and not the hyperpop playlist, but I thought it would be interesting to see how the genre is shifting into new territories while still bringing its "hyper" roots that at one point first came from Dance music.
+
+This song is Dream Analysis by patchymate, a catchy pop song where the main protagonists are guitar and vocals. I considered this song for analysis because it also incorporates a classic dance four-on-the-floor kick pattern. I thought this would make the tempogram into a clear straight line, similar to the previous case. However, I noticed that, even though there's a predominant bpm at 120, the line seems jagged and wiggly at some points. For example, I find it hard to understand the ramp up in tempo around 50 seconds, since the kick pattern stays the same and there's no significant changes. Around 90 seconds in, the line becomes wiggly again, but this time I had a better idea why: This is the bridge of the song, which in this case changes the beat and sound selection. The last few seconds of the song make the line irregular again due to the removal of the kick pattern and the introduction of granular pads and sound effects. This made me think: What would happen if I used a song where the latter type of sounds was predominant across the whole track? The next and last tempogram of my portfolio will explore exactly that.
+
+### Homework 11 Part 3 [Granular experiments]
+
+```{r}
+### BRAKENCE PREPARATION EXERCISE N07 (OPTIMIZED)
+
+p_plot <- readRDS(file = "data/prep_week_11.RDS")
+
+p_plot
+
+```
+
+***
+<h2>Breaking the code</h2>
+If there's one thing found across most hyperpop tracks, it has to be the crazy sound design and experimental electronic sounds all over the place. Granular sound design is one of the many techniques that these artists use, you can learn more about it in <a href="https://www.youtube.com/watch?v=dseIXf-Bis0">this</a> short video by the artist and producer phritz. After seeing what happens in the tempogram with Granular sound design in the previous tempogram, I wanted to see what would happen with a song where the complicated sound design of hyperpop takes the leading role.
+
+<a href="https://open.spotify.com/track/3P4qX48fiwsQXEBhOgvRt0?si=20ffc037eb324efa">preparation exercise no.7 (trembling)</a> by <a href="https://open.spotify.com/artist/4kqFrZkeqDfOIEqTWqbOOV?si=P3EbxkU7Sje0-VAyAqap9g">brakence</a> is a very special song in the genre because of its sound design and tempo changes, and therefore the perfect candidate to try to break the code for generating tempograms. The main conclusions I can draw from this experiment is that the sound design in this song made it really hard for the code to dictate a clear BPM and it rather shows a deconstructed spectrum of possible tempi across the duration of the song. Despite this, it is relevant to say that it seems to pick a ramping up tempo across all the duration of the track. This surprised me even more: It seems like the song is a constant crescendo from the very beginning. I knew I could expect a ramp-up section halfway through the song because I remembered it from listening to the song, however, I didn't expect the whole song to be constantly increasing the tempo. Finally, the tempo becomes a steady 95-ish bpm during the track outro that creates a seemless transition to the next song in brakence's album, <a href="https://open.spotify.com/track/718Z7VJDi0YRr7vXrdB0Uv?si=8db0ccda026b474d">cbd</a>
 
 Past, Present and Future of hyperpop {.storyboard}
 =====================================
@@ -157,7 +113,9 @@ loud <-
     ) +
     scale_alpha_continuous(
       guide = "none"
-    ) 
+    ) +
+    theme_classic() +
+    ggtitle("Loudness and energy distribution across Hyperpop playlists")
   
     
 ggplotly()
@@ -545,8 +503,6 @@ Tempogram? {data-navmenu="The hyperpop sound"}
 ### Chart DD
 
 ```{r}
-p_plot <- readRDS(file = "data/prep_week_11.RDS")
-
-p_plot
+print("Helloooo this is a test")
 ```
 

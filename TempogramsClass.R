@@ -40,6 +40,50 @@ prepare_plot <- prepare |>
   geom_raster() +
   scale_fill_viridis_c(guide = "none") +
   labs(x = "Time (s)", y = "Tempo (BPM)") +
-  theme_classic()
+  theme_classic() +
+  ggtitle("Tempogram of preparation exercise no.7 by brakence")
 
 saveRDS(object= prepare_plot, file = "data/prep_week_11.RDS")
+
+#### TYPICAL TEMPO A. G. COOK BEAUTIFUL, DANCE MUSIC BACKGROUND
+
+cook <- get_tidy_audio_analysis("0YAywhODGdHhWxuvFFhjE3")
+
+cook |>
+  tempogram(window_size = 8, hop_size = 1, cyclic = FALSE) |>
+  ggplot(aes(x = time, y = bpm, fill = power)) +
+  geom_raster() +
+  scale_fill_viridis_c(guide = "none") +
+  labs(x = "Time (s)", y = "Tempo (BPM)") +
+  theme_classic()
+
+cook |>
+  tempogram(window_size = 8, hop_size = 1, cyclic = TRUE) |>
+  ggplot(aes(x = time, y = bpm, fill = power)) +
+  geom_raster() +
+  scale_fill_viridis_c(guide = "none") +
+  labs(x = "Time (s)", y = "Tempo (BPM)") +
+  theme_classic()
+
+
+#### TYPICAL? TEMPO PATCHYMATE DREAM ANALYSIS, POP SONG DANCE INFLUENCES
+
+dream <- get_tidy_audio_analysis("68MQeN7xm2ooBG1o3BIS39")
+
+dream |>
+  tempogram(window_size = 8, hop_size = 1, cyclic = FALSE) |>
+  ggplot(aes(x = time, y = bpm, fill = power)) +
+  geom_raster() +
+  scale_fill_viridis_c(guide = "none") +
+  labs(x = "Time (s)", y = "Tempo (BPM)") +
+  theme_classic()
+
+dream |>
+  tempogram(window_size = 8, hop_size = 1, cyclic = TRUE) |>
+  ggplot(aes(x = time, y = bpm, fill = power)) +
+  geom_raster() +
+  scale_fill_viridis_c(guide = "none") +
+  labs(x = "Time (s)", y = "Tempo (BPM)") +
+  theme_classic()
+
+

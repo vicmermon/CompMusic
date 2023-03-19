@@ -165,8 +165,50 @@ torr |>
   theme_classic() +
   labs(x = "", y = "")
 
-The prefix "Hyper" slapped into the "pop" umbrella genre implies a clear pop influence into this type the hyerpop genre. One of the attributes that make pop music, popular, its the structure of the song. That's why, for this self-similarity plot I decided to see if a typical hyperpop song follows the classic pops structure of Verse-chorus-verse-chorus-bridge-chorus.
+# The prefix "Hyper" slapped into the "pop" umbrella genre implies a clear pop influence into this type the hyerpop genre. One of the attributes that make pop music, popular, its the structure of the song. That's why, for this self-similarity plot I decided to see if a typical hyperpop song follows the classic pops structure of Verse-chorus-verse-chorus-bridge-chorus.
+# 
+# This is selfdestruct by torr. When I first created this plot, the pop stucture was clear at to me first sight. There's a relatively easy to discern structure (a diagonal line) that repeats three time across the song-. While listening to the trakc I realized that this is the chorus, and the sections inbetween are verses. Right before the 100 seconds mark we can see a greener section that underlies the bridge, a section of pop songs characterized by changes in chord progression, lyrics and in timbre. After this, the chorus comes back one last time, incorporating new elements that weren't there in its previous itterations.
+# 
+# Overall, this plot helped me understand what Spotify means by "Hyperpop": If we strip down other elements such as sound design, we are left what essentialy is a pop song. 
 
-This is selfdestruct by torr. When I first created this plot, the pop stucture was clear at to me first sight. There's a relatively easy to discern structure (a diagonal line) that repeats three time across the song-. While listening to the trakc I realized that this is the chorus, and the sections inbetween are verses. Right before the 100 seconds mark we can see a greener section that underlies the bridge, a section of pop songs characterized by changes in chord progression, lyrics and in timbre. After this, the chorus comes back one last time, incorporating new elements that weren't there in its previous itterations.
 
-Overall, this plot helped me understand what Spotify means by "Hyperpop": If we strip down other elements such as sound design, we are left what essentialy is a pop song. 
+### PRETTY IN POSIBLE
+
+
+
+pretty <-
+  get_tidy_audio_analysis("4Q5LWPIKCuV6LRdDeqOYM7") |> # 
+  compmus_align(bars, segments) |>                     # Change `bars`
+  select(bars) |>                                      #   in all three
+  unnest(bars) |>                                      #   of these lines.
+  mutate(
+    pitches =
+      map(segments,
+          compmus_summarise, pitches,
+          method = "rms", norm = "euclidean"              # Change summary & norm.
+      )
+  ) |>
+  mutate(
+    timbre =
+      map(segments,
+          compmus_summarise, timbre,
+          method = "rms", norm = "euclidean"              # Change summary & norm.
+      )
+  )
+
+pretty |>
+  compmus_self_similarity(timbre, "cosine") |> 
+  ggplot(
+    aes(
+      x = xstart + xduration / 2,
+      width = xduration,
+      y = ystart + yduration / 2,
+      height = yduration,
+      fill = d
+    )
+  ) +
+  geom_tile() +
+  coord_fixed() +
+  scale_fill_viridis_c(guide = "none") +
+  theme_classic() +
+  labs(x = "", y = "")
