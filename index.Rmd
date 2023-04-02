@@ -5,7 +5,11 @@ output:
     orientation: columns
     vertical_layout: fill
     storyboard: true
-
+    self_contained: false
+    theme: 
+      version: 4
+      bootswatch: minty
+    
 ---
 
 ```{r setup, include=FALSE}
@@ -15,332 +19,12 @@ library(spotifyr)
 library(compmus)
 library(plotly)
 library(dplyr)
-source("TempogramsClass.R")
-```
-Latest homework {.storyboard}
-=====================================
+library(gridExtra)
+library(tidymodels)
+library(ggdendro)
+library(heatmaply)
+# source("TempogramsClass.R")
 
-### Homework 11 Part 1 [DANCE MUSIC BACKGROUND]
-
-```{r}
-cook <- get_tidy_audio_analysis("0YAywhODGdHhWxuvFFhjE3")
-
-cook |>
-  tempogram(window_size = 8, hop_size = 1, cyclic = TRUE) |>
-  ggplot(aes(x = time, y = bpm, fill = power)) +
-  geom_raster() +
-  scale_fill_viridis_c(guide = "none") +
-  labs(x = "Time (s)", y = "Tempo (BPM)") +
-  theme_classic() +
-  ggtitle("Tempogram of Beautiful by A. G. Cook")
-
-```
-
-***
-<h2>A Proto-Hyperpop classic</h2>
-Dance music is no stranger to the precursors of the hyperpop "genre". A steady beat pattern that is easy to dance to paired with cute vocal chops was one of the classic formulas to make a hyperpop banger in 2015, or how it was called around then: "bubblegum bass". The genre was inspired by Pop and Dance songs, and artists in the realm started making music around the idea of experimenting with the boundaries of these genres.
-
-A. G. Cook, creator of the label PC Music has been claimed to be one of the most important figures of the early days of the scene alongside peers like SOPHIE, EASYFUN, Danny L. Harle, umru, etc. For this reason, I thought it would be a great idea to look at the spectrogram of Cook's single "Beautiful", a dance-pop track that was bundled with many other proto-hyperpop bangers in the <a href="https://open.spotify.com/album/1nJD8cgitrI7sWC4i3Ox32?si=3401937641da4591" target=”_blank”>"PC Music, Vol. 1"</a> compilation.
-
-The tempogram shows a steady beat of 140 bpm. Around 1min and 15 seconds in we can see a fluctuation that might be caused by the removal of the main vocal and the incorporation risers and sound effects. I could imagine the code having some trouble with this section due to the lack of regular musical onsets that could help establish a steady beat. After this part however, the line comes back to a steady 140bpm. The reason why I chose this song for a tempogram is because I knew that the kick drum pattern didn't start until this part of the song (1min 30 secs), and I wanted to see if the code would have major problems beforehand. As we can see, aside from that brief section and the outro (which removes the drums), the tempogram implies the clear influence that Dance music had in the genre. For the next tempograms, we will see if the influence is still clear in newer hyperpop songs.
-
-### Homework 11 Part 2 [Dance influence prevails]
-
-```{r}
-dream <- get_tidy_audio_analysis("68MQeN7xm2ooBG1o3BIS39")
-
-dream |>
-  tempogram(window_size = 8, hop_size = 1, cyclic = TRUE) |>
-  ggplot(aes(x = time, y = bpm, fill = power)) +
-  geom_raster() +
-  scale_fill_viridis_c(guide = "none") +
-  labs(x = "Time (s)", y = "Tempo (BPM)") +
-  theme_classic() +
-  ggtitle("Tempogram of Dream Analysis by patchymate")
-
-```
-
-***
-To see how the influence of dance music has prevailed across the years in the genre, I wanted to study a song that came out in 2023. This song was part of the feedBack playlist, and not the hyperpop playlist, but I thought it would be interesting to see how the genre is shifting into new territories while still bringing its "hyper" roots that at one point first came from Dance music.
-
-This song is Dream Analysis by patchymate, a catchy pop song where the main protagonists are guitar and vocals. I considered this song for analysis because it also incorporates a classic dance four-on-the-floor kick pattern. I thought this would make the tempogram into a clear straight line, similar to the previous case. However, I noticed that, even though there's a predominant bpm at 120, the line seems jagged and wiggly at some points. For example, I find it hard to understand the ramp up in tempo around 50 seconds, since the kick pattern stays the same and there's no significant changes. Around 90 seconds in, the line becomes wiggly again, but this time I had a better idea why: This is the bridge of the song, which in this case changes the beat and sound selection. The last few seconds of the song make the line irregular again due to the removal of the kick pattern and the introduction of granular pads and sound effects. This made me think: What would happen if I used a song where the latter type of sounds was predominant across the whole track? The next and last tempogram of my portfolio will explore exactly that.
-
-### Homework 11 Part 3 [Granular experiments]
-
-```{r}
-### BRAKENCE PREPARATION EXERCISE N07 (OPTIMIZED)
-
-p_plot <- readRDS(file = "data/prep_week_11.RDS")
-
-p_plot
-
-```
-
-***
-<h2>Breaking the code</h2>
-If there's one thing found across most hyperpop tracks, it has to be the crazy sound design and experimental electronic sounds all over the place. Granular sound design is one of the many techniques that these artists use, you can learn more about it in <a href="https://www.youtube.com/watch?v=dseIXf-Bis0" target=”_blank”>this</a> short video by the artist and producer phritz. After seeing what happens in the tempogram with Granular sound design in the previous tempogram, I wanted to see what would happen with a song where the complicated sound design of hyperpop takes the leading role.
-
-<a href="https://open.spotify.com/track/3P4qX48fiwsQXEBhOgvRt0?si=20ffc037eb324efa" target=”_blank”>preparation exercise no.7 (trembling)</a> by <a href="https://open.spotify.com/artist/4kqFrZkeqDfOIEqTWqbOOV?si=P3EbxkU7Sje0-VAyAqap9g target=”_blank”">brakence</a> is a very special song in the genre because of its sound design and tempo changes, and therefore the perfect candidate to try to break the code for generating tempograms. The main conclusions I can draw from this experiment is that the sound design in this song made it really hard for the code to dictate a clear BPM and it rather shows a deconstructed spectrum of possible tempi across the duration of the song. Despite this, it is relevant to say that it seems to pick a ramping up tempo across all the duration of the track. This surprised me even more: It seems like the song is a constant crescendo from the very beginning. I knew I could expect a ramp-up section halfway through the song because I remembered it from listening to the song, however, I didn't expect the whole song to be constantly increasing the tempo. Finally, the tempo becomes a steady 95-ish bpm during the track outro that creates a seemless transition to the next song in brakence's album, <a href="https://open.spotify.com/track/718Z7VJDi0YRr7vXrdB0Uv?si=8db0ccda026b474d" target=”_blank”>cbd</a>
-
-Past, Present and Future of hyperpop {.storyboard}
-=====================================
-
-### It's all about being loud and energetic
-
-```{r}
-hyper <- get_playlist_audio_features("", "4fg8XveWZ4xQatc4mHLsyb")
-classic <- get_playlist_audio_features("", "3WWGBxHe4bAyKFq1DAnszd")
-feed <- get_playlist_audio_features("", "7oEgNy93qnlcm361HgrXrN")
-sound <-get_playlist_audio_features("", "7DrJ92Lc9UaVB1rKM2UGsg")
-
-
-loud <-
-  bind_rows(
-    hyper |> mutate(category = "Hyperpop (Spotify editorial)"),
-    classic |> mutate(category = "Hyperpop Classics (Spotify editorial)"),
-    feed |> mutate(category = "feedBack (Spotify editorial)"),
-    sound |> mutate(category = "The Sound of Hyperpop"),
-  )
-
-
-  ggplot(loud, aes(x = energy, y = loudness, alpha = tempo, color = category, text = track.name)) +
-  geom_point(size = 2, fill = "black") +
-
-  scale_color_brewer(
-    type = "qual",
-    palette = "Spectral",
-    name = "Playlist"
-    ) +
-    scale_alpha_continuous(
-      guide = "none"
-    ) +
-    theme_classic() +
-    ggtitle("Loudness and energy distribution across Hyperpop playlists")
-  
-    
-ggplotly()
-```
-***
-With this plot I wanted to study the overall loudness and energy across every song in my corpus. I decided to use the geom_point visualization so I could see every song represented with a circle. I also used plotly to identify each song with its name and its respective color associated with each playlist. The tempo of the songs is also associated with its transparency, but it is not the focus study of this plot.
-
-As you can see, the big bulk of songs is concentrated around the -10dB and -4dB range. My interpretation is that this is not a defining characteristic of the “hyperpop sound”, because probably most of the songs uploaded to streaming services get mastered around that level. However, it caught my eye how a great handful of songs are above 0dB, which made me think that hyperpop can easily reach the clipping territory. I will further study some of these songs to see if I can find any more useful information that stands out about them.
-
-In terms of energy, it seems like the range is extremely bast: It is mainly concentrated above 0.50, but covers almost every value. I argue that this is prooves that hyperpop songs don’t need to be very energetic to be part of the playlists, and even relaxing ballads such as Himera’s “I Look Up to the Sky & Remember How Much You Mean to Me” can be considered part of the “Sound of hyperpop”. However, It seems like once we start exploring the actual hyperpop communities picks (such as sleepy zone and FORM), the song choices deviate more from the bulk of energetic tracks that most editorial playlist recognize as energetic.
-
-### Nightcore influence, high bpm
-
-```{r}
-ggplot(loud, aes(x=tempo, fill = as.factor(category))) +
-  geom_density(alpha = 0.5) +
-  ggtitle("BPM distribution across playlists")
-
-ggplotly()
-```
-***
-One of the main attributes of the modern hyperpop sound is its influence from early internet music. In the early days of media sharing platforms such as YouTube, the genre Nightcore was born from uploads of sped up versions of famous pop songs. Hyperpop drinks a lot from this era of the internet, with high pitched vocals, instruments and fast tempos that easily embrace the early days of internet music consumption.
-
-As this is another key element of the “hyperpop sound”, I wanted to see if it coorelates to the data that I could find. In the resulting plot, you can see how there is a noticeable peak around 140-145 bpm where most of the songs reside. There is a secondary area around 80-90 bpm, which at first surprised me because I was not expecting such result across every playlist. After working on these plots for several days, I stumbled upon a track whose tempo value indicated 77bpm, however, this song feels quite faster to me. The song is “Hollywood Baby” by 100 gecs, and after seeing this phenomenon, I came to the conclusion that many of these tracks in the lower tempo range were having its bpm divided by two. The 100 gecs song has a bpm of 154, but the spotify API interprets it as 77, which is in practice the same.
-
-With this outlier exploration, I argue that the spotify API is not too reliable giving 100% accurate bpm measures, seeing how most of them get halved in the process. I wouldn’t say this plot is useful for giving us an insight into the “hyperpop sound”. However, as I stated previously, tempo is a very historically important thing to this community, so I tought it could be still worth exploring and keeping this plot in my storyboard.
-
-### Key usage across time
-
-```{r}
-
-```
-
-Chromograms {data-navmenu="The hyperpop sound"}
-=====================================
-
-### Chart AA
-
-```{r}
-####### HOLLYWOOD BABY
-baby <-
-  get_tidy_audio_analysis("48ElaQLYuOaybqagIlPxpU") |> # Hollywood Baby
-  compmus_align(bars, segments) |>                     # Change `bars`
-  select(bars) |>                                      #   in all three
-  unnest(bars) |>                                      #   of these lines.
-  mutate(
-    pitches =
-      map(segments,
-          compmus_summarise, pitches,
-          method = "rms", norm = "euclidean"              # Change summary & norm.
-      )
-  ) |>
-  mutate(
-    timbre =
-      map(segments,
-          compmus_summarise, timbre,
-          method = "rms", norm = "euclidean"              # Change summary & norm.
-      )
-  )
-baby |>
-  compmus_gather_timbre() |>
-  ggplot(
-    aes(
-      x = start + duration / 2,
-      width = duration,
-      y = basis,
-      fill = value
-    )
-  ) +
-  geom_tile() +
-  labs(x = "Time (s)", y = NULL, fill = "Magnitude") +
-  scale_fill_viridis_c() +                              
-  theme_classic()
-
-####### SPOILED LITTLE BRAT
-brat <-
-  get_tidy_audio_analysis("724utiMbqUfT1g3tqbfQYu") |> # 
-  compmus_align(bars, segments) |>                     # Change `bars`
-  select(bars) |>                                      #   in all three
-  unnest(bars) |>                                      #   of these lines.
-  mutate(
-    pitches =
-      map(segments,
-          compmus_summarise, pitches,
-          method = "rms", norm = "euclidean"              # Change summary & norm.
-      )
-  ) |>
-  mutate(
-    timbre =
-      map(segments,
-          compmus_summarise, timbre,
-          method = "rms", norm = "euclidean"              # Change summary & norm.
-      )
-  )
-brat |>
-  compmus_gather_timbre() |>
-  ggplot(
-    aes(
-      x = start + duration / 2,
-      width = duration,
-      y = basis,
-      fill = value
-    )
-  ) +
-  geom_tile() +
-  labs(x = "Time (s)", y = NULL, fill = "Magnitude") +
-  scale_fill_viridis_c() +                              
-  theme_classic()
-
-
-```
-
-***
-Commentary WIP
-
-Structure analysis {data-navmenu="The hyperpop sound" .storyboard}
-=====================================
-
-### The clear pop stucture
-```{r}
-# SELF SIMILARITY SELFDESTRUCT TORR
-
-torr <-
-  get_tidy_audio_analysis("0JEViMA9EhoTE501kxvJMU") |> # 
-  compmus_align(bars, segments) |>                     # Change `bars`
-  select(bars) |>                                      #   in all three
-  unnest(bars) |>                                      #   of these lines.
-  mutate(
-    pitches =
-      map(segments,
-          compmus_summarise, pitches,
-          method = "rms", norm = "euclidean"              # Change summary & norm.
-      )
-  ) |>
-  mutate(
-    timbre =
-      map(segments,
-          compmus_summarise, timbre,
-          method = "rms", norm = "euclidean"              # Change summary & norm.
-      )
-  )
-
-torr |>
-  compmus_self_similarity(timbre, "cosine") |> 
-  ggplot(
-    aes(
-      x = xstart + xduration / 2,
-      width = xduration,
-      y = ystart + yduration / 2,
-      height = yduration,
-      fill = d
-    )
-  ) +
-  geom_tile() +
-  coord_fixed() +
-  scale_fill_viridis_c(guide = "none") +
-  theme_classic() +
-  labs(x = "", y = "")
-```
-
-***
-The prefix "Hyper" slapped into the "pop" umbrella genre implies a clear pop influence into this type the hyerpop genre. One of the attributes that make pop music, popular, its the structure of the song. That's why, for this self-similarity plot I decided to see if a typical hyperpop song follows the classic pops structure of Verse-chorus-verse-chorus-bridge-chorus.
-
-This is selfdestruct by torr. When I first created this plot, the pop stucture was clear at to me first sight. There's a relatively easy to discern structure (a diagonal line) that repeats three time across the song. While listening to the track I realized that this is the chorus, and the sections inbetween are verses. Right before the 100 seconds mark we can see a greener section that underlies the bridge, a section of pop songs characterized by changes in chord progression, lyrics and in timbre. After this, the chorus comes back one last time, incorporating new elements that weren't there in its previous itterations.
-
-Overall, this plot helped me understand what Spotify means by "Hyperpop": If we strip down other elements such as sound design, we are left what essentialy is a pop song. 
-
-
-### What about an ambient section?
-
-```{r}
-###### SELF SIMILARITY DRY LAND
-
-dry <-
-  get_tidy_audio_analysis("7j7nOY7xZ7fpSVAKT4qz4b") |> # 
-  compmus_align(bars, segments) |>                     # Change `bars`
-  select(bars) |>                                      #   in all three
-  unnest(bars) |>                                      #   of these lines.
-  mutate(
-    pitches =
-      map(segments,
-          compmus_summarise, pitches,
-          method = "rms", norm = "euclidean"              # Change summary & norm.
-      )
-  ) |>
-  mutate(
-    timbre =
-      map(segments,
-          compmus_summarise, timbre,
-          method = "rms", norm = "euclidean"              # Change summary & norm.
-      )
-  )
-
-dry |>
-  compmus_self_similarity(timbre, "cosine") |> 
-  ggplot(
-    aes(
-      x = xstart + xduration / 2,
-      width = xduration,
-      y = ystart + yduration / 2,
-      height = yduration,
-      fill = d
-    )
-  ) +
-  geom_tile() +
-  coord_fixed() +
-  scale_fill_viridis_c(guide = "none") +
-  theme_classic() +
-  labs(x = "", y = "")
-```
-
-***
-
-Dry land 2001 by underscores is an example of a hyperpop song with an unusual structure, the song starts as a bass centered pop songs about tornados, and seemengly transitions into a 7 minute long ambient piece. With this self-similarity plot I wanted to see this ambient section appears in the plot. We can distinguish two clear sections: Before and after 150 seconds.
-
-Before this timestamp, the song retains its pop structure, and we can see some patterns that repeat during this time and delineate this type of songwriting characterized by verses and choruses.From 150secs on, we can see the appearance of a new pattern: Several parallel lines emerge and sustain through time. This is clearly the start of the ambient section, with looping guitar patterns that repeat until the 7 minute mark. It is interesting to see how a song with such an unconventional stucture can be bundled up in a collection of pop songs characterized with short song durations and more overall pop influenced sturctures thought the whole track. 
-
-This ambient section is an example of how the "hyperpop" sound goes beyond pop: These artists are not afraid to experiment and include an ambient section into their silly pop song, which clearly caught the eyes of the music industry and spotify's genre-creating playlist.
-
-Keygrams and chordograms {data-navmenu="The hyperpop sound" .storyboard}
-=====================================
-
-### Homeswitcher keygram
-
-```{r}
 circshift <- function(v, n) {
   if (n == 0) v else c(tail(v, n), head(v, -n))
 }
@@ -427,6 +111,439 @@ key_templates <-
     "D#:min", circshift(minor_key, 3)
   )
 
+```
+Introduction {.storyboard}
+=====================================
+
+### Corpus selection
+
+<h1>☆ Hello!</h1>
+<p>Welcome to my portfolio about Hyperpop, the new and exhausting pop construction of the music industry! In this storyboard, I will try to find if there’s a concrete type of sound that the umbrella term “Hyperpop” encapsulates. Is this a helpful and meaningful label/genre that Spotify created with a certain sound in mind? Or is it yet another agglomeration of unrelated songs put together by Spotify with the objective of selling a sound created by independent artists?</p>
+
+<h1>☆ Why hyperpop?</h1>
+<p>Spotify editorial playlists such as “hyperpop” carry a very important role of dictating the listening habits of thousands of users. They also have a great impact on the artist's revenue and streaming statistics (e.g. monthly listeners, playlists placements, streams per song, the "fans also like" section, etc). Getting a Spotify playlist placement can be a <a href="https://open.spotify.com/track/0uDCzWUXUDjeKLYzsdZ2F0?si=fbdbea8016f54655#0:29 target="_blank">very big deal for underground musicians,</a> as it puts them in the spotlight of a broader audience that can enjoy their music.</p>
+
+<h1>☆ Which songs?</h1>
+<p>My corpus selection consists of hyperpop songs that are bundled together in multiple playlists. During the last two months, I’ve been archiving each edition of the following editorial playlists: hyperpop classics, hyperpop, and feedBack. In addition, I also used the “The Sound of Hyperpop” playlist, as found in <a href="https://everynoise.com/engenremap-hyperpop.html" target="_blank"> Every Noise at Once </a>. (Note: I’ve described the reason why I chose each playlist in the next tabs of this section.)</p>
+
+<p>By studying these playlists I expect to find common features between songs that connect them directly (features, genre, instruments, BPM). I expect some common features to be decisive in determining if a song gets chosen by a spotify employee to be part of one of these playlists (like loudness and energy). As a fan of the scene since 2019, I’m aware that the songs that usually end up in these playlists are extremely different from one another. I recognize that there could be a  “hyperpop sound”, but I think it is very hard to describe with words and specific types of sounds/pitches, etc. Because of this, I mostly expect to find very disparate characteristics between songs, experimental song structures and many other special quirks to this one-of-a-kind type of music. I am also aware of the limitations of my study of using just Spotify playlists. Much of the music in the scene is mainly shared in Soundcloud and DJ mixes, but I think the Editorial Playlists will provide an interesting insight into what went into the minds of those who decided to call it "Hyperpop"
+</p>
+
+
+
+
+<h1>☆ Why labels don’t really make any sense</h1>
+<p>In <a href="https://youtu.be/HGzP1naK_sU?t=20" target="_blank">this</a> interview with the label creator and manager of <a href="https://www.billiebugara.com/deadair#:~:text=deadAir%20Records%20was%20co%2Dfounded,their%20artistic%20careers%20take%20shape." target="_blank">DeadAir</a>, Billie Bugara explains why these types of umbrella terms don’t make a lot of sense in many ways. Other platforms such as Soundcloud have also tried to bundle together the “hyperpop sound” in playlists with more or less success. For as much as Spotify really wants it to be, “hyperpop” is not a genre, in the same way that “workout music” is not a genre, or “halloween music” is not a genre. Hyperpop is a community of independent creators that use the tools that they have to create one of the most intricate and fun types of music one could ever imagine. </p>
+
+
+<h2>Welcome to the world of</h2>
+<p>
+<pre>
+██╗  ██╗██╗   ██╗██████╗ ███████╗██████╗ ██████╗  ██████╗ ██████╗     ██╗
+██║  ██║╚██╗ ██╔╝██╔══██╗██╔════╝██╔══██╗██╔══██╗██╔═══██╗██╔══██╗    ██║
+███████║ ╚████╔╝ ██████╔╝█████╗  ██████╔╝██████╔╝██║   ██║██████╔╝    ██║
+██╔══██║  ╚██╔╝  ██╔═══╝ ██╔══╝  ██╔══██╗██╔═══╝ ██║   ██║██╔═══╝     ╚═╝
+██║  ██║   ██║   ██║     ███████╗██║  ██║██║     ╚██████╔╝██║         ██╗
+╚═╝  ╚═╝   ╚═╝   ╚═╝     ╚══════╝╚═╝  ╚═╝╚═╝      ╚═════╝ ╚═╝         ╚═╝
+                                                                         
+</pre>
+</p>
+
+### The origins: Hyperpop classics
+
+<p>“Hyperpop classics” is an editorial playlist that was created in 2022 with the purpose of archiving a specific sound that characterized the early stages of the scene. It contains songs from the London-based label <a href="https://pcmusic.info/" target="_blank">PC Music </a>, pioneers in the sound even before 2015. The list hasn’t been updated very regularly, which indicates that the sound of “proto-hyperpop” has evolved into new territories. In this portfolio, I will try to find where the original sound has gone, and what has it left behind. Some artists from the list include: SOPHIE, A. G. Cook, 100 gecs, Dorian Electra, Charli XCX, etc.</p>
+
+***
+<iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/37i9dQZF1DXakZCf7SV1CS?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+
+### The one-and-only: Hyperpop
+<p>“Hyperpop” is the creative hub for the newest hyper-bangers of the scene. It was created in 2019, and it has been updated weekly ever since. The iteration that I archived for my corpus has been updated for the last time on March 30th, 2023. The artist selection is very broad, but I’ve noticed that with the passing of time it has been more and more populated with bigger artists that are signed to labels. It is obvious that these artists used to be smaller in 2019, but it is interesting to see how it has shifted from a Independent majority to a signed one. Therefore, to have a clearer idea of what the “hyperpop sound” is I will also be using the “The Sound of Hyperpop” playlist.</p>
+
+***
+<iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/37i9dQZF1DX7HOk71GPfSw?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+
+### The Sound of Hyperpop
+<p>Many of the songs that used to be in the hyperpop playlist are no longer included. For that reason, I’ll be using the “The Sound of Hyperpop” playlist that I found on the <a href="https://everynoise.com/engenremap-hyperpop.html" target="_blank"> Every Noise at Once </a> website. Most of the songs used in the Track-level plots such as tempograms, chordograms, or chromagrams will be using songs from this bigger playlist. This is one of the Spotify “secret genre playlists”, which makes it extremely useful to have a deeper understanding of what Spotify counts as Hyperpop.</p>
+
+***
+<iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/7DrJ92Lc9UaVB1rKM2UGsg?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+
+
+### The future of hyperpop?: feedBack
+<p>In the last couple of months, I’ve also been following the development of the feedBack playlist. Many former-hyperpop artists have been getting more playlist placements in this list, and it is updated far more frequently than any other list in this corpus does. For this reason, I will be using it as an insight of what the future of the “hyperpop sound” could be. The list is described by Spotify as a collection of “saturation, distorsion, overdrive and feedback”, all words that could apply to some rock-oriented hyperpop tunes. Will “hyperrock” be the next “big thing”?</p>
+
+***
+<iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/37i9dQZF1DXbmErmrio5En?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+
+Past, Present and Future of hyperpop {.storyboard}
+=====================================
+
+### It's all about being loud and energetic
+
+```{r loudness and energy}
+hyper <- get_playlist_audio_features("", "4fg8XveWZ4xQatc4mHLsyb")
+classic <- get_playlist_audio_features("", "3WWGBxHe4bAyKFq1DAnszd")
+feed <- get_playlist_audio_features("", "7oEgNy93qnlcm361HgrXrN")
+sound <-get_playlist_audio_features("", "7DrJ92Lc9UaVB1rKM2UGsg")
+
+
+loud <-
+  bind_rows(
+    hyper |> mutate(category = "Hyperpop (Spotify editorial)"),
+    classic |> mutate(category = "Hyperpop Classics (Spotify editorial)"),
+    feed |> mutate(category = "feedBack (Spotify editorial)"),
+    sound |> mutate(category = "The Sound of Hyperpop"),
+  )
+
+
+ggplot(loud, aes(x = energy, y = loudness, alpha = tempo, color = category, text = track.name)) +
+  geom_point(size = 2, fill = "black", ) +
+  scale_color_brewer(
+    type = "qual",
+    palette = "Spectral",
+    name = "Playlist"
+  ) +
+  scale_alpha_continuous(
+    guide = "none"
+  ) +
+  xlab("Energy") +
+  ylab("Loudness") +
+  theme_minimal()
+
+ggplotly()
+```
+***
+With this plot I wanted to study the overall loudness and energy across every song in my corpus. I decided to use the geom_point visualization so I could see every song represented with a circle. I also used plotly to identify each song with its name and its respective color associated with each playlist. The tempo of the songs is also associated with its transparency, but it is not the main focus study of this plot.
+
+As you can see, the big bulk of songs is concentrated around the -10dB and -4dB range. My interpretation is that this is not a defining characteristic of the “hyperpop sound”, because probably most of the songs uploaded to streaming services get mastered around that level. However, it caught my eye how a great handful of songs are above 0dB, which made me think that hyperpop can easily reach the clipping territory. Many of the artists in the scene embrace  clipping and their abilities to blow up speakers, so it was a happy surprise to see that some hyperpop tracks are actually above 0dB in Spotify.
+
+In terms of energy, it seems like the range is extremely broad: It is mainly concentrated above 0.50, but covers almost every value. I argue that this is prooves that hyperpop songs don’t need to be very energetic to be part of the playlists, and even relaxing ballads such as Himera’s “I Look Up to the Sky & Remember How Much You Mean to Me” can be considered part of the “Sound of hyperpop”.
+
+### Nightcore influence, high bpm
+
+```{r bpm distribution}
+ggplot(loud, aes(x=tempo, fill = as.factor(category))) +
+  geom_density(alpha = 0.5) +
+  ggtitle("BPM distribution across playlists") +
+  theme_minimal() 
+
+ggplotly()
+```
+***
+One of the main attributes of the modern hyperpop sound is its influence from early internet music. In the early days of media sharing platforms such as YouTube, the genre <a href="https://www.youtube.com/watch?v=uc2KgPZ2Neo" target = "_blank">Nightcore</a> was born from uploads of sped up versions of famous pop songs. Hyperpop drinks a lot from this era of the internet, with high pitched vocals, instruments and fast tempos that easily embrace the early days of internet music consumption.
+
+As this is another key element of the “hyperpop sound”, I wanted to see if it coorelates to the data that I could find. In the resulting plot, you can see how there is a noticeable peak around 140-145 bpm where most of the songs reside. There is a secondary area around 80-90 bpm, which at first surprised me because I was not expecting such result across every playlist. After working on these plots for several days, I stumbled upon a track whose tempo value indicated 77bpm, however, this song feels quite faster to me. The song is “Hollywood Baby” by 100 gecs, and after seeing this phenomenon, I came to the conclusion that many of these tracks in the lower tempo range were having its bpm divided by two. Spotify was detecting the tempo subharmonics as the original tempo! The 100 gecs song has a bpm of 154, but the spotify API interprets it as 77, which, in practice, is the same speed.
+
+With this outlier exploration, I argue that the spotify API is not too reliable giving 100% accurate bpm measures, seeing how most of them get halved in the process. I wouldn’t say this plot is useful for giving us an insight into the “hyperpop sound”. However, as I stated previously, tempo is a very historically important thing to this community, so I thought it could be still worth exploring and keeping this plot in my storyboard.
+
+### Is Hyperpop becoming sadder?
+
+```{r dance and valence}
+ggplot(loud, aes(x = danceability, y = valence, alpha = tempo, color = category, text = track.name)) +
+  geom_point(size = 1 ) +
+  scale_color_brewer(
+    type = "qual",
+    palette = "Spectral",
+    name = "Playlist"
+  ) +
+  scale_alpha_continuous(
+    guide = "none"
+  ) +
+  xlab("danceability") +
+  ylab("valence") +
+  facet_wrap(~category)+
+  theme_minimal()
+
+ggplotly()
+```
+***
+Valence is a very interesting feature, since it measures how happy or sad a song is on a scale between 0 and 1. For this plot, I wanted to have each playlist separately in a point plot, and see where the songs are located in terms of how happy they are and how danceable they are. The transparency of each dot also indicates the tempo of the song, so the more opaque dots will be the faster. I’ve noticed that Hyperpop has been hinting towards darker themes and lyrics over the past months, so I wanted to see if the songs in the feedBack playlist (which contains some of the newest deviations of hyperpop) would reflect that. My theory however was refuted, since, despite many of the songs being under 0.5 in valence, we can also see that this also applies with older hyperpop (In green) and the general “hyperpop sound” (in blue). It is also interesting to see how across every playlist, the great majority of the songs are at least 0.5 in danceability, so we could take away that in order to make a Hyperpop song, one would need to make it somewhat danceable, which makes sense, taking the electronic dance music influences many of the artists in the scene have.
+
+Chromagrams  {data-navmenu="The hyperpop sound"}
+=====================================
+
+Column {data-width=900}
+-----------------------------------
+### Two interesting hyperpop cases
+```{r movies for guys}
+
+#### movies for guys
+movies <-
+  get_tidy_audio_analysis("1urgZoAjz91vFqPEokA1OR") |>
+  select(segments) |>
+  unnest(segments) |>
+  select(start, duration, pitches)
+
+movies_chroma <- movies |>
+  mutate(pitches = map(pitches, compmus_normalise, "euclidean")) |>
+  compmus_gather_chroma() |>
+  ggplot(
+    aes(
+      x = start + duration / 2,
+      width = duration,
+      y = pitch_class,
+      fill = value
+    )
+  ) +
+  geom_tile() +
+  labs(x = "Time (s)", y = NULL, fill = "Magnitude", title = "\"movies for guys\" by Jane Remover", subtitle = "Three songs in one") +
+  theme_minimal() +
+  scale_fill_viridis_c() +
+  theme(plot.title = element_text(face="bold", size=8), plot.subtitle = element_text(size=6), axis.title = element_text(size=6), axis.text = element_text(size=6) , legend.title = element_text(size=6), legend.key.size = unit(0.3, 'cm'), legend.text = element_text(size=5))
+
+#### second hand embarassment
+hand <-
+  get_tidy_audio_analysis("7tVMsJriHeO3DoPV1d7L1j") |>
+  select(segments) |>
+  unnest(segments) |>
+  select(start, duration, pitches)
+
+hand_chroma <- hand |>
+  mutate(pitches = map(pitches, compmus_normalise, "euclidean")) |>
+  compmus_gather_chroma() |>
+  ggplot(
+    aes(
+      x = start + duration / 2,
+      width = duration,
+      y = pitch_class,
+      fill = value
+    )
+  ) +
+  geom_tile() +
+  labs(x = "Time (s)", y = NULL, fill = "Magnitude", title = "\"second hand embarassment\" by underscores", subtitle = "Key change in a pop-punk inspired song") +
+  theme_minimal() +
+  scale_fill_viridis_c() +
+  theme(plot.title = element_text(face="bold", size=8), plot.subtitle = element_text(size=6), axis.title = element_text(size=6), axis.text = element_text(size=6) , legend.title = element_text(size=6), legend.key.size = unit(0.3, 'cm'), legend.text = element_text(size=5))
+
+grid.arrange(movies_chroma, hand_chroma, nrow = 2)
+```
+
+Column {data-width=400 .tabset}
+-----------------------------------
+### Discussion
+A chromagram is designed to display the energy distribution across pitch classes in a particular song. These are two chromagrams of two hyperpop songs that I chose because I knew they would have something interesting to look forward to.
+
+In “<a href="https://open.spotify.com/track/1urgZoAjz91vFqPEokA1OR?si=47efdd6f15b5497a" target = "_blank">movies for guys</a>”, is a very special song for how its multiple parts connect to each other. It’s like three songs in one! That’s why I wanted to see if this could be visible in the chromagram in any significant way. Most of the energy is concentrated in C# and D# during the first two minutes. Specially around 120 seconds, where most of the instruments get removed and we are left with only vocal chops, this can be seen in the shape of a “gap” in energy across every pitch class that is not C# and D. The song then transitions to a second part where the energy remains persistent in C#, but with new pitches popping up such as A, B and C. Around 210 seconds, another transition takes place, this time emphasizing D#. The song ends in an acoustic outro where the energy is mostly concentrated in F. Jane sings “Then you’ll take the remote, I’ll get kicked out the house. Cause you said this movie is just for guys”, ending the eclectic track on a bittersweet note. It was interesting to see how my prediction was real, the first two parts of the song are relatively similar in terms of pitch distribution, and the most different one seems to be the outro.
+
+“<a href= "https://open.spotify.com/track/1PEPcLm2QEo0HCRIhQjPq1?si=1f53f077604a4f7d" target = "_blank">second hand embarrassment</a>” is a short but sweet hyper-pop-punk song by underscores. The energy here seems to be mainly in C# (again) and inf F#. I think this is just a coincidence, and I don’t think it would be a common trait of hyperpop songs to be centered around a specific pitch class. The reason why I chose this song is because I knew it had a key change towards the end of the track and I wanted to see how different the energy distribution would be from the rest of verses. This part can be seen from 90 seconds to 110 seconds, and the emphasized pitch classes are F and A. 
+
+
+
+Structure analysis {data-navmenu="The hyperpop sound" .storyboard}
+=====================================
+
+### The clear pop stucture
+```{r self destruct}
+# SELF SIMILARITY SELFDESTRUCT TORR
+
+torr <-
+  get_tidy_audio_analysis("0JEViMA9EhoTE501kxvJMU") |> #
+  compmus_align(bars, segments) |>                     # Change `bars`
+  select(bars) |>                                      #   in all three
+  unnest(bars) |>                                      #   of these lines.
+  mutate(
+    pitches =
+      map(segments,
+          compmus_summarise, pitches,
+          method = "rms", norm = "euclidean"              # Change summary & norm.
+      )
+  ) |>
+  mutate(
+    timbre =
+      map(segments,
+          compmus_summarise, timbre,
+          method = "rms", norm = "euclidean"              # Change summary & norm.
+      )
+  )
+
+torr_timbre <- torr |>
+  compmus_self_similarity(timbre, "cosine") |>
+  ggplot(
+    aes(
+      x = xstart + xduration / 2,
+      width = xduration,
+      y = ystart + yduration / 2,
+      height = yduration,
+      fill = d
+    )
+  ) +
+  geom_tile() +
+  coord_fixed() +
+  scale_fill_viridis_c(guide = "none") +
+  theme_classic() +
+  labs(x = "", y = "") +
+   labs(x = "", y = "", title = "Timbre-based Self-Similarity Matrix") + theme(title = element_text(size = 8))
+
+torr_chroma <- torr |>
+  compmus_self_similarity(pitches, "cosine") |> # change timbre/pitches
+  ggplot(
+    aes(
+      x = xstart + xduration / 2,
+      width = xduration,
+      y = ystart + yduration / 2,
+      height = yduration,
+      fill = d
+    )
+  ) +
+  geom_tile() +
+  coord_fixed() +
+  scale_fill_viridis_c(guide = "none") +
+  theme_classic() +
+  labs(x = "", y = "", title = "Chroma-based Self-Similarity Matrix") + theme(title = element_text(size = 8))
+
+grid.arrange(top="\"self destruct\" by torr", torr_chroma, torr_timbre, ncol=2)
+```
+
+***
+The prefix "Hyper" slapped into the "pop" umbrella genre implies a clear pop influence into this type the hyerpop genre. One of the attributes that make pop music, popular, its the structure of the song. That's why, for this self-similarity plot I decided to see if a typical hyperpop song follows the classic pops structure of Verse-chorus-verse-chorus-bridge-chorus.
+
+This is selfdestruct by torr. When I first created this plot, the pop stucture was clear at to me first sight. There's a relatively easy to discern structure (a diagonal line) that repeats three time across the song. While listening to the track I realized that this is the chorus, and the sections inbetween are verses. Right before the 100 seconds mark we can see a greener section that underlies the bridge, a section of pop songs characterized by changes in chord progression, lyrics and in timbre. After this, the chorus comes back one last time, incorporating new elements that weren't there in its previous itterations.
+
+Overall, this plot helped me understand what Spotify means by "Hyperpop": If we strip down other elements such as sound design, we are left what essentialy is a pop song.
+
+
+### What about an ambient section?
+
+```{r Dry land 2001}
+###### SELF SIMILARITY DRY LAND
+
+dry <-
+  get_tidy_audio_analysis("7j7nOY7xZ7fpSVAKT4qz4b") |> #
+  compmus_align(bars, segments) |>                     # Change `bars`
+  select(bars) |>                                      #   in all three
+  unnest(bars) |>                                      #   of these lines.
+  mutate(
+    pitches =
+      map(segments,
+          compmus_summarise, pitches,
+          method = "rms", norm = "euclidean"              # Change summary & norm.
+      )
+  ) |>
+  mutate(
+    timbre =
+      map(segments,
+          compmus_summarise, timbre,
+          method = "rms", norm = "euclidean"              # Change summary & norm.
+      )
+  )
+
+dry_timbre <- dry |>
+  compmus_self_similarity(timbre, "cosine") |>
+  ggplot(
+    aes(
+      x = xstart + xduration / 2,
+      width = xduration,
+      y = ystart + yduration / 2,
+      height = yduration,
+      fill = d
+    )
+  ) +
+  geom_tile() +
+  coord_fixed() +
+  scale_fill_viridis_c(guide = "none") +
+  theme_classic() +
+  labs(x = "", y = "") +
+  labs(x = "", y = "", title = "Timbre-based Self-Similarity Matrix") + theme(title = element_text(size = 8))
+
+dry_chroma <- dry |>
+  compmus_self_similarity(pitches, "cosine") |> # change timbre/pitches
+  ggplot(
+    aes(
+      x = xstart + xduration / 2,
+      width = xduration,
+      y = ystart + yduration / 2,
+      height = yduration,
+      fill = d
+    )
+  ) +
+  geom_tile() +
+  coord_fixed() +
+  scale_fill_viridis_c(guide = "none") +
+  theme_classic() +
+  labs(x = "", y = "", title = "Chroma-based Self-Similarity Matrix") + theme(title = element_text(size = 8))
+
+grid.arrange(top="\"Dry land 2001\" by underscores", dry_chroma, dry_timbre, ncol=2)
+
+```
+
+***
+
+Dry land 2001 by underscores is an example of a hyperpop song with an unusual structure: T12he song starts as a bass centered pop songs about tornados, and seemengly transitions into a 7 minute long ambient piece. With this self-similarity plot I wanted to see this ambient section appears in the plot. We can distinguish two clear sections: Before and after 150 seconds.
+
+Before this timestamp, the song retains its pop structure, and we can see some patterns that repeat during this time and delineate this type of songwriting characterized by verses and choruses.From 150secs on, we can see the appearance of a new pattern: Several parallel lines emerge and sustain through time. This is clearly the start of the ambient section, with looping guitar patterns that repeat until the 7 minute mark. It is interesting to see how a song with such an unconventional stucture can be bundled up in a collection of pop songs characterized with short song durations and more overall pop influenced sturctures thought the whole track.
+
+This ambient section is an example of how the "hyperpop" sound goes beyond pop: These artists are not afraid to experiment and include an ambient section into their silly pop song, which clearly caught the eyes of the music industry and spotify's genre-creating playlist.
+
+### Cute and noisy
+```{r Petal supply If you want to}
+petal <-
+  get_tidy_audio_analysis("3byo8fIOMu0en5j8Zx4Jp1") |> # Change URI.
+  compmus_align(bars, segments) |>                     # Change `bars`
+  select(bars) |>                                      #   in all three
+  unnest(bars) |>                                      #   of these lines.
+  mutate(
+    pitches =
+      map(segments,
+          compmus_summarise, pitches,
+          method = "rms", norm = "euclidean"              # Change summary & norm.
+      )
+  ) |>
+  mutate(
+    timbre =
+      map(segments,
+          compmus_summarise, timbre,
+          method = "rms", norm = "euclidean"              # Change summary & norm.
+      )
+  )
+petal_chroma <- petal |>
+  compmus_self_similarity(pitches, "cosine") |> # change timbre/pitches
+  ggplot(
+    aes(
+      x = xstart + xduration / 2,
+      width = xduration,
+      y = ystart + yduration / 2,
+      height = yduration,
+      fill = d
+    )
+  ) +
+  geom_tile() +
+  coord_fixed() +
+  scale_fill_viridis_c(guide = "none") +
+  theme_classic() +
+  labs(x = "", y = "", title = "Chroma-based Self-Similarity Matrix") + theme(title = element_text(size = 8))
+
+petal_timbre <- petal |>
+  compmus_self_similarity(timbre, "cosine") |> # change timbre/pitches
+  ggplot(
+    aes(
+      x = xstart + xduration / 2,
+      width = xduration,
+      y = ystart + yduration / 2,
+      height = yduration,
+      fill = d
+    )
+  ) +
+  geom_tile() +
+  coord_fixed() +
+  scale_fill_viridis_c(guide = "none") +
+  theme_classic() +
+  labs(x = "", y = "", title = "Timbre-Based Self-Similarity Matrix") + theme(title = element_text(size = 8))
+
+grid.arrange(top="\"If You Want To\" by Petal Supply", petal_chroma, petal_timbre, ncol=2)
+```
+
+***
+“<a href=”https://open.spotify.com/track/3byo8fIOMu0en5j8Zx4Jp1?si=ef2dfe3623284f39” target =”_blank”>If You Want To</a>" by Petal Supply is a classic example of a hyperpop song with extreme contrast in timbre between its sections. The song switches from pop vocals inspired by the <a href=”https://www.youtube.com/watch?v=7k9OF4aapAo”  target =”_blank”>vocaloid</a> software, a tools characterized for robotic, computer generated vocals with a very particular timbre. 
+
+The song also features two extremely bass heavy sections with screamo vocals, the exact opposite of cute vocals and synths. The first iteration is around 45 seconds in. We can clearly see the sudden change in timbre after this section, and the parallel lines pattern of the noisy section comes back again for the song outro. I love to see how well this example played out as a Self-similarity Matrix: The extreme contrast in timbre between sections is very clearly noticeable, which resonates with the eclectic and energetic nature of this type of very fun music.
+
+
+Keygrams and chordograms {data-navmenu="The hyperpop sound" .storyboard}
+=====================================
+
+### Homeswitcher keygram
+
+```{r homeswitcher}
 ### CHORDGRAM OF AN ARCHETYPE: HOMESWITCHER
 
 home <-
@@ -459,12 +576,12 @@ home |>
 ```
 
 ***
-For this keygram I decided to analyse “homeswitcher” by Jane Remover, an archetype of the hyperpop genre that greatly influenced the genre merely two years ago. I also decided to analyse it because it is one of the few tracks in my corpus where the loudness level is above 0dB.
+For this keygram I decided to analyse “<a href="https://open.spotify.com/track/3wGDs4CbpDqpsTYyN5pe8o?si=8e303339e4374bb4" target ="_blank">homeswitcher</a>” by Jane Remover, an archetype of the hyperpop genre that greatly influenced the genre merely two years ago. I also decided to analyse it because it is one of the few tracks in my corpus where the loudness level is above 0dB.
 
 The track is F#min, but its clarity seems to differ depending on the section of the song. Around 40seconds in, the code seems to have a harder time telling the key, and even C#min seems to be darker for a few seconds. My guess is that the reason why the key becomes less obvious in these sections is because they are the loudest, and coincidentally incorporate a very noisy sub bass into the mix.
 
 ### Broken Friendship Bracelet chordogram
-```{r}
+```{r broken friendship bracelet}
 friend <-
   get_tidy_audio_analysis("5tJAGoIXg3ZKX7W6unLGMv") |>
   compmus_align(bars, segments) |>
@@ -495,14 +612,251 @@ friend |>
 ```
 
 ***
-For this second plot, I analysed the chordogram of Broken Friendship Bracelet by Himera, a track that is mainly composed of a repeating arpeggio that varies and incorporates more elements as the song progresses. Around 50 seconds in, we can see a shift from the first section that lived in the D7~C7 area towards the C#min~F#min area. This shift is very noticeable in the track with a change in sound selection that lead more towards trance music.
+For this second plot, I analysed the chordogram of "<a href="https://open.spotify.com/track/5tJAGoIXg3ZKX7W6unLGMv?si=3d38315876e5448d" target="_blank">Broken Friendship Bracelet</a> by Himera, a track that is mainly composed of a repeating arpeggio that varies and incorporates more elements as the song progresses. Around 50 seconds in, we can see a shift from the first section that lived in the D7~C7 area towards the C#min~F#min area. This shift is very noticeable in the track with a change in sound selection that lead more towards trance music.
 
-Tempogram? {data-navmenu="The hyperpop sound"}
+Tempograms {data-navmenu="The hyperpop sound" .storyboard}
 =====================================
 
-### Chart DD
+### Hyperpop's roots in dance music
 
-```{r}
-print("Helloooo this is a test")
+```{r beautiful}
+cook <- get_tidy_audio_analysis("0YAywhODGdHhWxuvFFhjE3")
+
+cook |>
+  tempogram(window_size = 8, hop_size = 1, cyclic = TRUE) |>
+  ggplot(aes(x = time, y = bpm, fill = power)) +
+  geom_raster() +
+  scale_fill_viridis_c(guide = "none") +
+  labs(x = "Time (s)", y = "Tempo (BPM)") +
+  theme_classic() +
+  ggtitle("Tempogram of Beautiful by A. G. Cook")
+
 ```
 
+***
+
+<h2>A Proto-Hyperpop classic</h2>
+Dance music is no stranger to the precursors of the hyperpop "genre". A steady beat pattern that is easy to dance to paired with cute vocal chops was one of the classic formulas to make a hyperpop banger in 2015, or how it was called around then: "bubblegum bass". The genre was inspired by Pop and Dance songs, and artists in the realm started making music around the idea of experimenting with the boundaries of these genres.
+
+A. G. Cook, creator of the label PC Music has been claimed to be one of the most important figures of the early days of the scene alongside peers like SOPHIE, EASYFUN, Danny L. Harle, umru, etc. For this reason, I thought it would be a great idea to look at the spectrogram of Cook's single "Beautiful", a dance-pop track that was bundled with many other proto-hyperpop bangers in the <a href="https://open.spotify.com/album/1nJD8cgitrI7sWC4i3Ox32?si=3401937641da4591" target=”_blank”>"PC Music, Vol. 1"</a> compilation.
+
+The tempogram shows a steady beat of 140 bpm. Around 1min and 15 seconds in we can see a fluctuation that might be caused by the removal of the main vocal and the incorporation risers and sound effects. I could imagine the code having some trouble with this section due to the lack of regular musical onsets that could help establish a steady beat. After this part however, the line comes back to a steady 140bpm. The reason why I chose this song for a tempogram is because I knew that the kick drum pattern didn't start until this part of the song (1min 30 secs), and I wanted to see if the code would have major problems beforehand. As we can see, aside from that brief section and the outro (which removes the drums), the tempogram implies the clear influence that Dance music had in the genre. For the next tempograms, we will see if the influence is still clear in newer hyperpop songs.
+
+
+
+### The dance music influence prevails!
+
+```{r dream analysis}
+dream <- get_tidy_audio_analysis("68MQeN7xm2ooBG1o3BIS39")
+
+dream |>
+  tempogram(window_size = 8, hop_size = 1, cyclic = TRUE) |>
+  ggplot(aes(x = time, y = bpm, fill = power)) +
+  geom_raster() +
+  scale_fill_viridis_c(guide = "none") +
+  labs(x = "Time (s)", y = "Tempo (BPM)") +
+  theme_classic() +
+  ggtitle("Tempogram of Dream Analysis by patchymate")
+
+```
+
+***
+<h2>Dance-rock music!</h2>
+To see how the influence of dance music has prevailed across the years in the genre, I wanted to study a song that came out in 2023. This song was part of the feedBack playlist, and not the hyperpop playlist, but I thought it would be interesting to see how the genre is shifting into new territories while still bringing its "hyper" roots that at one point first came from Dance music.
+
+This song is Dream Analysis by patchymate, a catchy pop song where the main protagonists are guitar and vocals. I considered this song for analysis because it also incorporates a classic dance four-on-the-floor kick pattern. I thought this would make the tempogram into a clear straight line, similar to the previous case. However, I noticed that, even though there's a predominant bpm at 120, the line seems jagged and wiggly at some points. For example, I find it hard to understand the ramp up in tempo around 50 seconds, since the kick pattern stays the same and there's no significant changes. Around 90 seconds in, the line becomes wiggly again, but this time I had a better idea why: This is the bridge of the song, which in this case changes the beat and sound selection. The last few seconds of the song make the line irregular again due to the removal of the kick pattern and the introduction of granular pads and sound effects. This made me think: What would happen if I used a song where the latter type of sounds was predominant across the whole track? The next and last tempogram of my portfolio will explore exactly that.
+
+### Granular experiments
+
+```{r preparation exercise}
+# ### BRAKENCE PREPARATION EXERCISE N07 (OPTIMIZED)
+
+# p_plot <- readRDS(file = "data/prep_week_11.RDS")
+# 
+# p_plot
+
+prepare <- get_tidy_audio_analysis("3P4qX48fiwsQXEBhOgvRt0")
+ 
+prepare |>
+  tempogram(window_size = 8, hop_size = 1, cyclic = FALSE) |>
+  ggplot(aes(x = time, y = bpm, fill = power)) +
+  geom_raster() +
+  scale_fill_viridis_c(guide = "none") +
+  labs(x = "Time (s)", y = "Tempo (BPM)") +
+  theme_classic()
+
+prepare_plot <- prepare |>
+  tempogram(window_size = 8, hop_size = 1, cyclic = TRUE) |>
+  ggplot(aes(x = time, y = bpm, fill = power)) +
+  geom_raster() +
+  scale_fill_viridis_c(guide = "none") +
+  labs(x = "Time (s)", y = "Tempo (BPM)") +
+  theme_classic() +
+  ggtitle("Tempogram of preparation exercise no.7 by brakence")
+```
+
+***
+<h2>Breaking the code</h2>
+If there's one thing found across most hyperpop tracks, it has to be the crazy sound design and experimental electronic sounds all over the place. Granular sound design is one of the many techniques that these artists use, you can learn more about it in <a href="https://www.youtube.com/watch?v=dseIXf-Bis0" target=”_blank”>this</a> short video by the artist and producer phritz. After seeing what happens in the tempogram with Granular sound design in the previous tempogram, I wanted to see what would happen with a song where the complicated sound design of hyperpop takes the leading role.
+
+<a href="https://open.spotify.com/track/3P4qX48fiwsQXEBhOgvRt0?si=20ffc037eb324efa" target=”_blank”>preparation exercise no.7 (trembling)</a> by <a href="https://open.spotify.com/artist/4kqFrZkeqDfOIEqTWqbOOV?si=P3EbxkU7Sje0-VAyAqap9g target=”_blank”">brakence</a> is a very special song in the genre because of its sound design and tempo changes, and therefore the perfect candidate to try to break the code for generating tempograms. The main conclusions I can draw from this experiment is that the sound design in this song made it really hard for the code to dictate a clear BPM and it rather shows a deconstructed spectrum of possible tempi across the duration of the song. Despite this, it is relevant to say that it seems to pick a ramping up tempo across all the duration of the track. This surprised me even more: It seems like the song is a constant crescendo from the very beginning. I knew I could expect a ramp-up section halfway through the song because I remembered it from listening to the song, however, I didn't expect the whole song to be constantly increasing the tempo. Finally, the tempo becomes a steady 95-ish bpm during the track outro that creates a seemless transition to the next song in brakence's album, <a href="https://open.spotify.com/track/718Z7VJDi0YRr7vXrdB0Uv?si=8db0ccda026b474d" target=”_blank”>cbd</a>
+
+Dendrograms {data-navmenu="The hyperpop sound" .storyboard}
+=====================================
+
+### Hierarchical clustering of the Hyperpop playlist
+
+```{r Hierarchical clustering}
+get_conf_mat <- function(fit) {
+  outcome <- .get_tune_outcome_names(fit)
+  fit |>
+    collect_predictions() |>
+    conf_mat(truth = outcome, estimate = .pred_class)
+}
+
+get_pr <- function(fit) {
+  fit |>
+    conf_mat_resampled() |>
+    group_by(Prediction) |> mutate(precision = Freq / sum(Freq)) |>
+    group_by(Truth) |> mutate(recall = Freq / sum(Freq)) |>
+    ungroup() |> filter(Prediction == Truth) |>
+    select(class = Prediction, precision, recall)
+}
+
+hyperpop <-
+  get_playlist_audio_features("", "4fg8XveWZ4xQatc4mHLsyb") |>
+  add_audio_analysis() |>
+  mutate(
+    segments = map2(segments, key, compmus_c_transpose),
+    pitches =
+      map(segments,
+          compmus_summarise, pitches,
+          method = "mean", norm = "manhattan"
+      ),
+    timbre =
+      map(
+        segments,
+        compmus_summarise, timbre,
+        method = "mean"
+      )
+  ) |>
+  mutate(pitches = map(pitches, compmus_normalise, "clr")) |>
+  mutate_at(vars(pitches, timbre), map, bind_rows) |>
+  unnest(cols = c(pitches, timbre))
+
+hyperpop_juice <-
+  recipe(
+    track.name ~
+      danceability +
+      energy +
+      loudness +
+      speechiness +
+      acousticness +
+      instrumentalness +
+      liveness +
+      valence +
+      tempo +
+      duration +
+      C + `C#|Db` + D + `D#|Eb` +
+      E + `F` + `F#|Gb` + G +
+      `G#|Ab` + A + `A#|Bb` + B +
+      c01 + c02 + c03 + c04 + c05 + c06 +
+      c07 + c08 + c09 + c10 + c11 + c12,
+    data = hyperpop
+  ) |>
+  step_center(all_predictors()) |>
+  step_scale(all_predictors()) |>
+  # step_range(all_predictors()) |>
+  prep(hyperpop |> mutate(track.name = str_trunc(track.name, 20))) |>
+  juice() |>
+  column_to_rownames("track.name")
+
+hyperpop_dist <- dist(hyperpop_juice, method = "euclidean")
+
+hyperpop_dist |>
+  hclust(method = "average") |> # Try single, average, and complete.
+  dendro_data() |>
+  ggdendrogram()
+
+```
+
+***
+For this dendrogram, I wanted to see how the spotify API would react if I wanted it to cluster together songs from the original hyperpop playlist. Across this portfolio we have seen how different hyperpop songs can be from one another in many aspects such as timbre, pitch, energy, valence, etc. As the plot is quite hard to read, I will highlight some of the clusters that have resulted from this Hierarchical clustering in the average function. Then, I will use a heatmap of the selected clusters to see their common features.
+
+The song <a href=”https://open.spotify.com/track/2I8kUUKfC7h0QY3Qpfd0iq?si=6168ac1e35584dfd” target=”_blank”>Make U 3 Me</a> by Alice Longyu Gao was clustered alongside <a href=”https://open.spotify.com/track/7D4lgMbSs10AQ0zX3ZldJc?si=0f9e2424adfe4931” target=”_blank”>ABC</a> by Polyphia. Both are songs with a pop structure and vocals, sung by a feminine vocalist and in a very similar tempo. However, the timbre is quite different, since the former has heavy metal influences and the latter had a math rock influence. Were they clustered because they both use guitars? I don’t think so, but I think that the two songs make a lot of sense when played next to each other.
+
+A very similar case happened with many of the resulting clusters: Timbre was relatively different between songs, but the tempo and pop vocals and structure remained relatively consistent between pairs. However, one song caught my eye because of how early it was separated from the rest. The song is <a href=”https://open.spotify.com/track/50MNRG3QscZOkJcOApElDe?si=4bd96131adf34e6a” target=”_blank”>with my eyes</a> by m1v, a minimal and instrumental heavy song. The vocals are very auto tuned and pitch shifted, and the synth melody repeats itself without changes across the whole song. As it was such a individualized case, I will analyze it further in the heatmap alongside other song pairings.
+
+### Heatmap of the outliers
+```{r heatmap}
+heat <-
+  get_playlist_audio_features("", "0fCXGfJzrJjB3DX8ZI92BN") |>
+  add_audio_analysis() |>
+  mutate(
+    segments = map2(segments, key, compmus_c_transpose),
+    pitches =
+      map(segments,
+          compmus_summarise, pitches,
+          method = "mean", norm = "manhattan"
+      ),
+    timbre =
+      map(
+        segments,
+        compmus_summarise, timbre,
+        method = "mean"
+      )
+  ) |>
+  mutate(pitches = map(pitches, compmus_normalise, "clr")) |>
+  mutate_at(vars(pitches, timbre), map, bind_rows) |>
+  unnest(cols = c(pitches, timbre))
+
+heat_juice <-
+  recipe(
+    track.name ~
+      danceability +
+      energy +
+      loudness +
+      speechiness +
+      acousticness +
+      instrumentalness +
+      liveness +
+      valence +
+      tempo +
+      duration +
+      C + `C#|Db` + D + `D#|Eb` +
+      E + `F` + `F#|Gb` + G +
+      `G#|Ab` + A + `A#|Bb` + B +
+      c01 + c02 + c03 + c04 + c05 + c06 +
+      c07 + c08 + c09 + c10 + c11 + c12,
+    data = heat
+  ) |>
+  step_center(all_predictors()) |>
+  step_scale(all_predictors()) |>
+  # step_range(all_predictors()) |>
+  prep(heat |> mutate(track.name = str_trunc(track.name, 20))) |>
+  juice() |>
+  column_to_rownames("track.name")
+
+heatmaply(
+  heat_juice,
+  hclustfun = hclust,
+  hclust_method = "average",  # Change for single, average, or complete linkage.
+  dist_method = "euclidean"
+)
+```
+
+***
+This plot is a result of selecting 20 tracks that I considered representative of the previous Hierarchical clustering dendrogram. I tried to make a heatmap with the whole playlist, but it was heavily unreadable, so I decided to use this one instead. 
+
+Before making both of these clustering plots, I thought that the Spotify API would use the song’s instrumentalness and speechyness values as a determining factor for clustering. Since hyperpop is just “extreme” pop music, I thought that the great identity and importance of what makes a song “hyperpop” would be in the vocals. The results proved my theory: The instrumentalness value is very uniform across this group of songs. The only exception was <a href=”https://open.spotify.com/track/58EeA0ktx2MkqlaYhEQGwQ?si=5a36d0c19e394899” target =”_blank”>Meridians</a> by Holly Waxwing, a song that doesn’t feature any vocals, and despite this was clustered with vocal, heavy songs, not like the individualized track “with my eyes” that I talked about in the previous plot. It seems like the vocals are a important factor, but the instrumentalness of a track doesn’t determine fully if a track is Hyperpop or not. 
+
+Coming back to <a href=”https://open.spotify.com/track/50MNRG3QscZOkJcOApElDe?si=4bd96131adf34e6a” target=”_blank”>with my eyes</a>, it becomes quite clear with this heatmap why it was separated so early on in the previous plot. It has the highest values in speechyness and mFCCs c06, plus the lowest value in mFCCs c11. I argue that these three features are what makes this song apart from the rest of the songs in the playlist. Are the mysterious features of c06 and c11 the key to get a playlist value? If a song relies heavely in “speechy” vocals, would it be harder to get a playlist placement in the hyperpop playlist? It seems like this is the case, seeing how this is the only example of a song with such characteristics. However, the fact that the song was here in the first place also tells us that it is not impossible. Yes, it is the only one like this, but it still got chosen.
+
+Conclusions
+=====================================
+<h1>“Is Hyperpop the future of pop?, maybe!”</h1>
+<p>This set of analyses has been a useful tool for research in this very young and still emerging type of music. Since it is so new, most of the information online comes in the shape of the stories told within online communities and Youtube Video essays. For example,  <a href="https://www.youtube.com/watch?v=ooAuteRHyD0" target="_blank">this</a> video by Mic The Snare is a very good summary of this eclectic story of fun pop music. </p>
+
+<p>I think this portfolio would be an interesting tool to reverse engineer a Hyperpop song; especially with the last dendrogram, which summarized the whole story in a simplified view of the whole scene. We could take out of these experiments a recipe to make a song that would, with some luck, grant us a spot in the almighty playlist. The “secret hyperpop recipe” would be a song with very little speechy vocals, a fast, danceable beat and great timbre contrast between sections that would make your song so ear grabbing that they can’t stop pressing repeat. However, none of these points should be taken too seriously: Hyperpop emerged from the idea of not following any rules and just having fun with music, so why should we care about what Spotify thinks “hyperpop” is or what it is not? Besides this, “hyperpop” music goes beyond the very limited scope of Editorial Playlists, but for this portfolio to be possible, a set of assumptions were made, which included precisely that.</p>
+
+<p>Through this storyboard I used Spotify APIs tools and Editorial Playlists to try to understand what Hyperpop is according to the industry giant. However, I argue that only taking this part in account would be missing the point completely. Hyperpop exists as much as it doesn’t. It is a community of artists that make fun music and try not to take it too seriously. As much as Spotify wants to, there’s no such thing as “hyperpop” or “feedBack” or any other Editorial Playlist. “Hyperpop”, or whatever we want to call it, makes me excited about the future of music and the artists behind crazy and fun ideas. Where would hyperpop go if we just followed a “hyperpop recipe” imposed by Spotify’s documentation features? Probably nowhere. We should keep imagination and creativity in the equation, and not let corporations decide for us what makes fun music, fun.</p>
