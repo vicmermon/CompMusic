@@ -121,7 +121,7 @@ Introduction {.storyboard}
 <p>Welcome to my portfolio about Hyperpop, the new and exhausting pop construction of the music industry! In this storyboard, I will try to find if there’s a concrete type of sound that the umbrella term “Hyperpop” encapsulates. Is this a helpful and meaningful label/genre that Spotify created with a certain sound in mind? Or is it yet another agglomeration of unrelated songs put together by Spotify with the objective of selling a sound created by independent artists?</p>
 
 <h1>☆ Why hyperpop?</h1>
-<p>Spotify editorial playlists such as “hyperpop” carry a very important role of dictating the listening habits of thousands of users. They also have a great impact on the artist's revenue and streaming statistics (e.g. monthly listeners, playlists placements, streams per song, the "fans also like" section, etc). Getting a Spotify playlist placement can be a <a href="https://open.spotify.com/track/0uDCzWUXUDjeKLYzsdZ2F0?si=fbdbea8016f54655#0:29 target="_blank">very big deal for underground musicians,</a> as it puts them in the spotlight of a broader audience that can enjoy their music.</p>
+<p>Spotify editorial playlists such as “hyperpop” carry a very important role of dictating the listening habits of thousands of users. They also have a great impact on the artist's revenue and streaming statistics (e.g. monthly listeners, playlists placements, streams per song, the "fans also like" section, etc). Getting a Spotify playlist placement can be a very big deal for underground musicians, as it puts them in the spotlight of a broader audience that can enjoy their music.</p>
 
 <h1>☆ Which songs?</h1>
 <p>My corpus selection consists of hyperpop songs that are bundled together in multiple playlists. During the last two months, I’ve been archiving each edition of the following editorial playlists: hyperpop classics, hyperpop, and feedBack. In addition, I also used the “The Sound of Hyperpop” playlist, as found in <a href="https://everynoise.com/engenremap-hyperpop.html" target="_blank"> Every Noise at Once </a>. (Note: I’ve described the reason why I chose each playlist in the next tabs of this section.)</p>
@@ -787,7 +787,7 @@ The song <a href=”https://open.spotify.com/track/2I8kUUKfC7h0QY3Qpfd0iq?si=616
 
 A very similar case happened with many of the resulting clusters: Timbre was relatively different between songs, but the tempo and pop vocals and structure remained relatively consistent between pairs. However, one song caught my eye because of how early it was separated from the rest. The song is <a href=”https://open.spotify.com/track/50MNRG3QscZOkJcOApElDe?si=4bd96131adf34e6a” target=”_blank”>with my eyes</a> by m1v, a minimal and instrumental heavy song. The vocals are very auto tuned and pitch shifted, and the synth melody repeats itself without changes across the whole song. As it was such a individualized case, I will analyze it further in the heatmap alongside other song pairings.
 
-### Heatmap of the outliers
+### Heatmap of the clustered songs
 ```{r heatmap}
 heat <-
   get_playlist_audio_features("", "0fCXGfJzrJjB3DX8ZI92BN") |>
